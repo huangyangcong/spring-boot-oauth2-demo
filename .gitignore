@@ -1,0 +1,17 @@
+*.class
+*.log
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+*.iml
+*.ipr
+*.iws
+
+hs_err_pid*
+
+target/
+
+.idea/

@@ -1,0 +1,28 @@
+oauthserver: http://localhost:8080/server
+resource-server: http://localhost:8082/data-resource
+
+security:
+  basic:
+    enabled: false
+  oauth2:
+    client:
+      clientId: note
+      clientSecret: note
+      scope: read,write
+      auto-approve-scopes: '.*'
+      accessTokenUri: ${oauthserver}/oauth/token
+      userAuthorizationUri: ${oauthserver}/oauth/authorize
+      authorizedGrantTypes: authorization_code
+    resource:
+      userInfoUri: ${oauthserver}/me
+      tokenInfoUri: ${oauthserver}/oauth/check_token
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+
+
+server:
+  port: 8081
+  servlet:
+    context-path: /ssoclient1

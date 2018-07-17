@@ -1,0 +1,21 @@
+oauthserver: http://localhost:8080/server
+#
+spring:
+  datasource:
+    platform: h2
+
+security:
+  oauth2:
+    client:
+      clientId: note
+      clientSecret: note
+    resource:
+      tokenInfoUri: ${oauthserver}/oauth/check_token
+logging:
+  level:
+    org.springframework.security: DEBUG
+
+
+server:
+  port: 8082
+  context-path: /data-resource
