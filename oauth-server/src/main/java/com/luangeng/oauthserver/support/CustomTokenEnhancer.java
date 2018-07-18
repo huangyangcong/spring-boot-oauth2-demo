@@ -16,7 +16,7 @@ public class CustomTokenEnhancer implements TokenEnhancer {
         if (accessToken instanceof DefaultOAuth2AccessToken) {
             DefaultOAuth2AccessToken daccessToken = (DefaultOAuth2AccessToken)accessToken;
             Map<String, Object> additionalInfo = new HashMap<>();
-            additionalInfo.put("msg", "add by CustomTokenEnhancer");
+            additionalInfo.put("msg", "empty");
             daccessToken.setAdditionalInformation(additionalInfo);
             return daccessToken;
         }

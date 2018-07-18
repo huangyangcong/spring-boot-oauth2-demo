@@ -12,7 +12,7 @@
 
 <body>
 
-<div class="container">
+<div>
 
     <h1>Oauth2 Server</h1>
 
@@ -23,8 +23,23 @@
     </div>
 
     <table border="1">
+        <tr>
+            <td>value</td>
+            <td>expiration</td>
+            <td>tokenType</td>
+            <td>refreshToken expiration</td>
+            <td>scope</td>
+            <td>additionalInformation</td>
+            <td>opertion</td>
+        </tr>
         <tr class="list-unstyled" th:each="token:${tokens}">
-            <td></td>
+            <td th:text="${token.value}"></td>
+            <td th:text="${#dates.format(token.expiration,'yyyy-MM-dd HH:mm:ss')}"></td>
+            <td th:text="${token.tokenType}"></td>
+            <td th:text="${#dates.format(token.refreshToken.expiration,'yyyy-MM-dd HH:mm:ss')}"></td>
+            <td th:text="${token.scope}"></td>
+            <td th:text="${token.additionalInformation}"></td>
+            <td><a href="#">revokeToken</a></td>
         </tr>
     </table>
 

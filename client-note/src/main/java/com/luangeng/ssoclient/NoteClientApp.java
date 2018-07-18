@@ -8,10 +8,10 @@ import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
 
 @SpringBootApplication
-public class SsoClientApp {
+public class NoteClientApp {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SsoClientApp.class, args);
+		SpringApplication.run(NoteClientApp.class, args);
 	}
 
 	@Bean
