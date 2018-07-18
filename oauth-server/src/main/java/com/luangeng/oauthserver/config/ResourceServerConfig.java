@@ -10,7 +10,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 @EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
-    public static final String AUTH_RESOURCE_ID = "ssoserver";
+    public static final String AUTH_RESOURCE_ID = "oauth-server";
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) {
@@ -20,7 +20,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
-                .requestMatchers().antMatchers("/me", "/msg")
+                .requestMatchers().antMatchers("/me", "/msg", "/admin/**")
                 .and()
                 .authorizeRequests()
                 .anyRequest().authenticated();

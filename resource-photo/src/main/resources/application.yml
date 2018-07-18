@@ -17,4 +17,4 @@ logging:
 server:
   port: 7001
   servlet:
-    context-path: /resource
+    context-path: /resource-photo

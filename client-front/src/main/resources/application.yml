@@ -1,4 +1,4 @@
 server:
   port: 8002
   servlet:
-    context-path: /ssofront
+    context-path: /client-front

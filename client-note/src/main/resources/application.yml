@@ -1,5 +1,5 @@
 oauthserver: http://localhost:9000/server
-resource-server: http://localhost:7000/data-resource
+resource-server: http://localhost:7000/resource-note
 
 security:
   basic:
@@ -25,4 +25,4 @@ logging:
 server:
   port: 8000
   servlet:
-    context-path: /ssoclient1
+    context-path: /client-note

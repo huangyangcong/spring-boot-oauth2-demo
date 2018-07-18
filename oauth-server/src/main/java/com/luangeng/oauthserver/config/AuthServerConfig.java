@@ -1,5 +1,6 @@
 package com.luangeng.oauthserver.config;
 
+import com.luangeng.oauthserver.support.CustomTokenEnhancer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,6 +10,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 
@@ -33,6 +35,11 @@ public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
 //        return new RedisTokenStore(connectionFactory);
     }
 
+    @Bean
+    public TokenEnhancer tokenEnhancer() {
+        return new CustomTokenEnhancer();
+    }
+
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.jdbc(dataSource);
@@ -40,14 +47,16 @@ public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
 
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        endpoints.tokenStore(tokenStore());
+        endpoints.tokenStore(tokenStore())
+                .tokenEnhancer(tokenEnhancer())
+        ;
     }
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
         oauthServer.realm("server/client")
                 .allowFormAuthenticationForClients()
-                .checkTokenAccess("isAuthenticated()");//permitAll()
+                .checkTokenAccess("permitAll()");
     }
 
 }

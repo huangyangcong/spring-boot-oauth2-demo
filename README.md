@@ -2,11 +2,15 @@
 Spring Boot oauth2 demo project
 
 oauth-server    授权服务            9000
+
 resource-note   资源服务-笔记        7000
+
 reource-photo   资源服务-照片        7001
 
 client-note     客户服务-笔记         8000
+
 client-photo    客户服务-照片         8001
+
 client-front    客户服务-前端         8002
 
 

@@ -24,8 +24,10 @@ public class PhotoServiceImpl implements PhotoService {
     public PhotoServiceImpl() {
         photos.add(new PhotoInfo("1", "z"));
         photos.add(new PhotoInfo("2", "z"));
+        photos.add(new PhotoInfo("3", "user"));
     }
 
+    @Override
     public List<PhotoInfo> getPhotosForCurrentUser(String username) {
         ArrayList<PhotoInfo> infos = new ArrayList<PhotoInfo>();
         for (PhotoInfo info : photos) {
@@ -36,6 +38,7 @@ public class PhotoServiceImpl implements PhotoService {
         return infos;
     }
 
+    @Override
     public InputStream loadPhoto(String id) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = null;

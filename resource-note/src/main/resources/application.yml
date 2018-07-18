@@ -19,4 +19,4 @@ logging:
 server:
   port: 7000
   servlet:
-    context-path: /data-resource
+    context-path: /resource-note

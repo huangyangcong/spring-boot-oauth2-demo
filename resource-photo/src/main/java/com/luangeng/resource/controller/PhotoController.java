@@ -20,12 +20,13 @@ import java.security.Principal;
 import java.util.Collection;
 
 @Controller
+@RequestMapping("/photos")
 public class PhotoController {
 
     @Autowired
     private PhotoService photoService;
 
-    @RequestMapping("/photos/{photoId}")
+    @RequestMapping("/{photoId}")
     public ResponseEntity<byte[]> getPhoto(@PathVariable("photoId") String id) throws IOException {
         InputStream photo = photoService.loadPhoto(id);
         if (photo == null) {
@@ -44,7 +45,7 @@ public class PhotoController {
         }
     }
 
-    @RequestMapping(value = "/photos", params = "format=json")
+    @RequestMapping(params = "format=json")
     public ResponseEntity<String> getJsonPhotos(Principal principal) {
         Collection<PhotoInfo> photos = photoService.getPhotosForCurrentUser(principal.getName());
         String out = new Gson().toJson(photos);
@@ -53,7 +54,7 @@ public class PhotoController {
         return new ResponseEntity<String>(out, headers, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/photos", params = "format=xml")
+    @RequestMapping(params = "format=xml")
     public ResponseEntity<String> getXmlPhotos(Principal principal) {
         Collection<PhotoInfo> photos = photoService.getPhotosForCurrentUser(principal.getName());
         StringBuilder out = new StringBuilder();
@@ -68,7 +69,7 @@ public class PhotoController {
         return new ResponseEntity<String>(out.toString(), headers, HttpStatus.OK);
     }
 
-    @RequestMapping("/photos/trusted/message")
+    @RequestMapping("/message")
     @PreAuthorize("#oauth2.clientHasRole('ROLE_CLIENT')")
     @ResponseBody
     public String getTrustedClientMessage(Principal principal) {
