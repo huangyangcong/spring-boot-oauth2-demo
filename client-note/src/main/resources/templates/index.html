@@ -8,7 +8,7 @@
 </head>
 <body>
 <div class="fixed-action-btn">
-    <a class="btn-floating btn-large waves-effect waves-light blue" href="/add"><i class="material-icons">add</i></a>
+    <a class="btn-floating btn-large waves-effect waves-light blue" href="/ssoclient1/add"><i class="material-icons">add</i></a>
 </div>
 
 <div th:replace="fragments/header :: header"></div>
@@ -18,8 +18,7 @@
         <div class="card">
             <div class="card-content">
                 <span class="card-title" th:text="${note.title}">Card Title</span>
-                <p th:text="${note.content}">I am a very simple card. I am good at containing small bits of information.
-                    I am convenient because I require little markup to use effectively.</p>
+                <p th:text="${note.content}"></p>
             </div>
         </div>
     </div>

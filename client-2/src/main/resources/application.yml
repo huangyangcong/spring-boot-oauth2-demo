@@ -1,5 +1,4 @@
-oauthserver:
-  http://localhost:8080/server
+oauthserver: http://localhost:9000/server
 security:
   oauth2:
     client:
