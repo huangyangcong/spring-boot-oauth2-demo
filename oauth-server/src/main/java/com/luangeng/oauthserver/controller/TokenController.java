@@ -2,9 +2,8 @@ package com.luangeng.oauthserver.controller;
 
 import com.luangeng.oauthserver.vo.TokenVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.security.Principal;
 import java.util.*;
@@ -24,6 +22,7 @@ import java.util.*;
  */
 @Controller
 @RequestMapping("/token")
+@PreAuthorize("hasRole('ADMIN')")
 public class TokenController {
 
     @Autowired
@@ -32,15 +31,10 @@ public class TokenController {
     @Autowired
     private ConsumerTokenServices tokenServices;
 
-
-    @RequestMapping(value = "/{token}", method = RequestMethod.DELETE)
-    public ResponseEntity<Void> revokeToken(@PathVariable String token) {
-        //checkResourceOwner(user, principal);
-        if (tokenServices.revokeToken(token)) {
-            return new ResponseEntity<Void>(HttpStatus.OK);
-        } else {
-            return new ResponseEntity<Void>(HttpStatus.NOT_MODIFIED);
-        }
+    @RequestMapping(value = "/{token}")
+    public String revokeToken(@PathVariable String token) {
+        tokenServices.revokeToken(token);
+        return "redirect:/token";
     }
 
     @RequestMapping

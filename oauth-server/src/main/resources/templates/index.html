@@ -52,7 +52,7 @@
             <td th:text="${token.clientId}"></td>
             <td th:text="${token.userName}"></td>
             <td th:text="${token.userRole}"></td>
-            <td><a href="#">revokeToken</a></td>
+            <td><a th:href="|@{/token/}${token.accessToken.value}|">revokeToken</a></td>
         </tr>
     </table>
 
