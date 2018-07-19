@@ -1,5 +1,6 @@
 package com.luangeng.oauthserver.controller;
 
+import com.luangeng.oauthserver.vo.TokenVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,7 +45,7 @@ public class TokenController {
 
     @RequestMapping
     public String listTokens(Model model) throws Exception {
-        List<OAuth2AccessToken> tokens = new ArrayList<>();
+        List<TokenVo> tokens = new ArrayList<>();
         List<String> clients = Arrays.asList("photo", "note", "demo");
         for (String client : clients) {
             tokens.addAll(enhance(tokenStore.findTokensByClientId(client)));
@@ -53,8 +54,8 @@ public class TokenController {
         return "index";
     }
 
-    private List<OAuth2AccessToken> enhance(Collection<OAuth2AccessToken> tokens) {
-        List<OAuth2AccessToken> result = new ArrayList<OAuth2AccessToken>();
+    private List<TokenVo> enhance(Collection<OAuth2AccessToken> tokens) {
+        List<TokenVo> result = new ArrayList<TokenVo>();
         for (OAuth2AccessToken prototype : tokens) {
             DefaultOAuth2AccessToken token = new DefaultOAuth2AccessToken(prototype);
             OAuth2Authentication authentication = tokenStore.readAuthentication(token);
@@ -66,11 +67,13 @@ public class TokenController {
             String userRole = printList(authentication.getAuthorities());
 
             Map<String, Object> map = new HashMap<String, Object>(token.getAdditionalInformation());
-            map.put("client_id", clientId);
-            map.put("user_name", userName);
-            map.put("user_role", userRole);
+            TokenVo vo = new TokenVo();
+            vo.setAccessToken(token);
+            vo.setClientId(clientId);
+            vo.setUserName(userName);
+            vo.setUserRole(userRole);
             token.setAdditionalInformation(map);
-            result.add(token);
+            result.add(vo);
         }
         return result;
     }

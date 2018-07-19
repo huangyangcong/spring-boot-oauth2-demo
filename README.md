@@ -25,3 +25,5 @@ https://spring.io/blog/2015/02/03/sso-with-oauth2-angular-js-and-spring-security
 https://segmentfault.com/a/1190000013531863
 
 http://andaily.com/spring-oauth-server/db_table_description.html
+
+https://www.jianshu.com/p/ac4c00a63750

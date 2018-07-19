@@ -16,6 +16,13 @@
 
     <h1>Oauth2 Server</h1>
 
+    <div>
+        <a th:href="@{/token}">token</a>
+        <a th:href="@{/h2-console}">h2</a>
+        <a href="http://localhost:8000/client-note" target="_blank">client-note</a>
+        <a href="http://localhost:8001/client-photo" target="_blank">client-photo</a>
+    </div>
+
     <div class="form-horizontal">
         <form th:action="@{/logout}" method="post">
             <button class="btn btn-primary" type="submit">Logout</button>
@@ -30,15 +37,21 @@
             <td>refreshToken expiration</td>
             <td>scope</td>
             <td>additionalInformation</td>
+            <td>clientId</td>
+            <td>userName</td>
+            <td>userRole</td>
             <td>opertion</td>
         </tr>
         <tr class="list-unstyled" th:each="token:${tokens}">
-            <td th:text="${token.value}"></td>
-            <td th:text="${#dates.format(token.expiration,'yyyy-MM-dd HH:mm:ss')}"></td>
-            <td th:text="${token.tokenType}"></td>
-            <td th:text="${#dates.format(token.refreshToken.expiration,'yyyy-MM-dd HH:mm:ss')}"></td>
-            <td th:text="${token.scope}"></td>
-            <td th:text="${token.additionalInformation}"></td>
+            <td th:text="${token.accessToken.value}"></td>
+            <td th:text="${#dates.format(token.accessToken.expiration,'yyyy-MM-dd HH:mm:ss')}"></td>
+            <td th:text="${token.accessToken.tokenType}"></td>
+            <td th:text="${#dates.format(token.accessToken.refreshToken.expiration,'yyyy-MM-dd HH:mm:ss')}"></td>
+            <td th:text="${token.accessToken.scope}"></td>
+            <td th:text="${token.accessToken.additionalInformation}"></td>
+            <td th:text="${token.clientId}"></td>
+            <td th:text="${token.userName}"></td>
+            <td th:text="${token.userRole}"></td>
             <td><a href="#">revokeToken</a></td>
         </tr>
     </table>

@@ -13,10 +13,10 @@ CREATE TABLE `oauth_client_details` (
   PRIMARY KEY (`client_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `oauth_client_details` VALUES ('demo', null, 'demo', 'write,read', 'password,authorization_code,refresh_token', null, null, 60, 3000, null, 'true');
-INSERT INTO `oauth_client_details` VALUES ('photo', 'photos', 'photo', 'read', 'authorization_code,refresh_token', null, null, 60, 3000, null, 'true');
-INSERT INTO `oauth_client_details` VALUES ('note', 'note', 'note', 'read,write', 'authorization_code,refresh_token', null, null, 60, 3000, null, 'true');
-INSERT INTO `oauth_client_details` VALUES ('sso', null, 'sso', 'read', 'authorization_code,refresh_token', null, null, 60, 3000, null, 'true');
+INSERT INTO `oauth_client_details` VALUES ('demo', null, 'demo', 'write,read', 'password,authorization_code,refresh_token', null, null, 600, 3000, null, 'true');
+INSERT INTO `oauth_client_details` VALUES ('photo', 'photos', 'photo', 'read', 'authorization_code,refresh_token', null, null, 600, 3000, null, 'true');
+INSERT INTO `oauth_client_details` VALUES ('note', 'note', 'note', 'read,write', 'authorization_code,refresh_token', null, null, 600, 3000, null, 'true');
+INSERT INTO `oauth_client_details` VALUES ('sso', null, 'sso', 'read', 'authorization_code,refresh_token', null, null, 600, 3000, null, 'true');
 
 insert into user (enabled, expried, locked, password, username) values (1,0,0,'user','user');
 insert into user (enabled, expried, locked, password, username) values (1,0,0,'admin','admin');
@@ -26,6 +26,6 @@ insert into role (name) values ('USER');
 insert into role (name) values ('ADMIN');
 insert into role (name) values ('GUEST');
 
-insert into user_roles values (0,0);
 insert into user_roles values (1,1);
 insert into user_roles values (2,2);
+insert into user_roles values (3,3);

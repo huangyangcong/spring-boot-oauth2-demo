@@ -27,10 +27,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public static PasswordEncoder passwordEncoder() {
+        //new BCryptPasswordEncoder();
         return NoOpPasswordEncoder.getInstance();
     }
 
     @Autowired
+    @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService);
 //                .inMemoryAuthentication().withUser("z").password("z").roles("USER").
@@ -62,13 +64,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .accessDeniedPage("/login?authorization_error=true")
                 .and()
 
+                //创建session的策略
+                // .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                // .and()
+
+                .headers().frameOptions().disable()
+                .and()
+
                 .csrf()
                 .requireCsrfProtectionMatcher(new AntPathRequestMatcher("/oauth/authorize"))
                 .disable()
 
                 //.cors().configurationSource(configurationSource()).and()
 
-                .logout().addLogoutHandler(MylogoutHandler())
+                .logout().addLogoutHandler(logoutHandler())
                 .and()
 
                 .formLogin()
@@ -79,7 +88,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public LogoutHandler MylogoutHandler() {
+    public LogoutHandler logoutHandler() {
         return (httpServletRequest, httpServletResponse, authentication) -> {
             try {
                 String redirect = httpServletRequest.getParameter("redirect_uri");
