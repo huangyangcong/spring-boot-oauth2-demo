@@ -57,6 +57,7 @@ for (var a=0;a<6;a++){
 var url = oauth_server+"/oauth/authorize?client_id="+client_id+"&client_secret="+client_secret+
           "&response_type=code&state="+state+"&redirect_uri="+redirect_uri;
  window.location = url;
+ //window.open(url);
 }
 
 function fetchToken(){
