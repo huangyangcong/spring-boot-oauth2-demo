@@ -1,4 +1,4 @@
-package com.luangeng.ssoclient;
+package com.luangeng.oauthserver.service;
 
 import lombok.Data;
 import org.springframework.http.*;

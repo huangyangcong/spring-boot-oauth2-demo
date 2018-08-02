@@ -1,5 +1,5 @@
 const ding_url = "https://oapi.dingtalk.com/connect/oauth2/sns_authorize?";
-const redirect_url = "https://www.baidu.com/";
+const redirect_url = "http://localhost:9000/auth";
 const appid = "dingoa1ft83dapn4jhlxnn";
 const appSecret = "vXwQ-JarhtSQmILQdh_ONSf0egP1BWnvsv63Lo3ISijtv3AVUZO66jqZq3fk_n6U";
 

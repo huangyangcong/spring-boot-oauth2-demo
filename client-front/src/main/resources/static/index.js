@@ -13,15 +13,16 @@ function ajaxSetup() {
             if(this.url.endsWith('/oauth/token')){
                 return true;
             }
-            var auth = getAuth();
-		    if (auth != null){
-		        xhr.setRequestHeader("Authorization", auth.token_type + ' ' + auth.access_token);
-		        return true;
-		    }else {
+		    if (getAuth() == null){
 		        fetchToken();
-		        return true;
 		    }
-
+		    var auth = getAuth();
+		    if(auth != null){
+		        xhr.setRequestHeader("Authorization", auth.token_type + ' ' + auth.access_token);
+		    } else {
+		        return false;
+		    }
+            return true;
 		},
 		complete : function(xhr, ts) {
 		    if (xhr.status == 401 && xhr.responseJSON.error =='invalid_token') {
@@ -65,6 +66,7 @@ function fetchToken(){
     if(!url.includes('code')){
         getCode();
     }
+    if(url.includes('code')) {
       let code=url.substr(url.indexOf('code=')+5,6);
       let state=url.substr(url.indexOf('state=')+6,6);
 
@@ -86,12 +88,13 @@ function fetchToken(){
        success: function (sResponse) {
         saveAuth(sResponse);
         console.log('fetch_token ok: ' + sResponse.access_token+'  expires_in:'+sResponse.expires_in);
-        window.location.href = redirect_uri;
+        //window.location.href = redirect_uri;
        },
        error:function(a,b,c){
         console.log(a, b, c);
        }
     });
+    }
 }
 
 function refreshToken(){

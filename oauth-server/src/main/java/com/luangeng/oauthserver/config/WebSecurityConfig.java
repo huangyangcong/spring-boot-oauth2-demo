@@ -1,5 +1,6 @@
 package com.luangeng.oauthserver.config;
 
+import com.luangeng.oauthserver.ding.ThirdLoginFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsUtils;
@@ -43,13 +45,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/", "/webjars/**", "/public/**");
+        web.ignoring().antMatchers("/", "/webjars/**", "/public/**", "/js/**");
     }
 
     @Override
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
+    }
+
+    @Bean
+    ThirdLoginFilter thirdLoginFilter() {
+        return new ThirdLoginFilter();
     }
 
     @Override
@@ -64,6 +71,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling()
                 .accessDeniedPage("/login?authorization_error=true")
                 .and()
+                .addFilterBefore(thirdLoginFilter(), UsernamePasswordAuthenticationFilter.class)
 
                 //创建session的策略
                 //.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
