@@ -42,7 +42,7 @@ public class ThirdAuthenticationProvider implements AuthenticationProvider {
         if (userinfo == null) {
             throw new UsernameNotFoundException("钉钉扫码登录失败，未获取到用户信息");
         }
-        String username = "00150060";//userinfo.get
+        String username = "admin";//userinfo.get
 
         UserDetails user = userService.loadUserByUsername(username);
         if (user == null) {
