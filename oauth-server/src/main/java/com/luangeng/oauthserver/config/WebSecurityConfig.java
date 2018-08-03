@@ -1,10 +1,11 @@
 package com.luangeng.oauthserver.config;
 
-import com.luangeng.oauthserver.ding.ThirdLoginFilter;
+import com.luangeng.oauthserver.ding.ThirdAuthenticationFilter;
+import com.luangeng.oauthserver.ding.ThirdAuthenticationProvider;
+import com.luangeng.oauthserver.support.MySimpleUrlAuthenticationFailureHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,6 +15,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -39,24 +41,46 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService);
+        auth.authenticationProvider(myProvider());
 //                .inMemoryAuthentication().withUser("z").password("z").roles("USER").
 //                and().withUser("admin").password("admin").roles("ADMIN");
     }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/", "/webjars/**", "/public/**", "/js/**");
-    }
-
-    @Override
-    @Bean
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
+        web.ignoring().antMatchers("/", "/webjars/**", "/static/**", "/js/**");
     }
 
     @Bean
-    ThirdLoginFilter thirdLoginFilter() {
-        return new ThirdLoginFilter();
+    public SimpleUrlAuthenticationFailureHandler ytoSimpleUrlAuthenticationFailureHandler() {
+        String failureUrl = "/login?error";
+        MySimpleUrlAuthenticationFailureHandler handler = new MySimpleUrlAuthenticationFailureHandler(failureUrl);
+        return handler;
+    }
+
+//    @Bean
+//    @Override
+//    static AuthenticationManager authenticationManagerBean() throws Exception {
+//        return super.authenticationManagerBean();
+//    }
+//
+//    @Autowired
+//    @Qualifier("authenticationManagerBean")
+//    private AuthenticationManager authenticationManager;
+
+    @Bean
+    public ThirdAuthenticationProvider myProvider() {
+        ThirdAuthenticationProvider my = new ThirdAuthenticationProvider();
+        my.setUserService(userDetailsService);
+        return my;
+    }
+
+    @Bean
+    ThirdAuthenticationFilter thirdLoginFilter() throws Exception {
+        ThirdAuthenticationFilter filter = new ThirdAuthenticationFilter();
+        filter.setAuthenticationManager(super.authenticationManager());
+        filter.setAuthenticationFailureHandler(ytoSimpleUrlAuthenticationFailureHandler());
+        return filter;
     }
 
     @Override

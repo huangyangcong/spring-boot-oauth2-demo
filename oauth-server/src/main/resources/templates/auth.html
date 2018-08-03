@@ -1,10 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
     <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
 
+<form method="post" th:action="@{/auth}" id="login_form" name="login_form">
+    <input id="login_type" name="login_type" class="form-control" type="hidden"/>
+    <input id="login_code" name="login_code" class="form-control" type="hidden"/>
+    <input id="login_from" name="login_from" class="form-control" type="hidden"/>
+</form>
+
 </body>
+<script type="text/javascript">
+//<![CDATA[
+
+    $(function() {
+        let params = window.location.search.split("&");
+    if(!params[0].startsWith('?code=')){
+        return;
+    }
+    var tmp_auth_code = params[0].substr(params[0].indexOf("code=")+5);
+    if (tmp_auth_code.trim().length<3){
+        return;
+    }
+    $("#login_code").val(tmp_auth_code);
+    $("#login_from").val("https://www.www.baidu.com");
+    $("#login_type").val("dingding");
+    document.getElementById('login_form').submit();
+
+});
+
+//  ]]>
+
+</script>
 </html>

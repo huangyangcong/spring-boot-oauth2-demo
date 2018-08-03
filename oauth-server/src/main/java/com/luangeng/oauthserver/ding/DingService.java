@@ -1,25 +1,35 @@
-package com.luangeng.oauthserver.service;
+package com.luangeng.oauthserver.ding;
 
 import lombok.Data;
 import org.springframework.http.*;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-//https://blog.csdn.net/biboheart/article/details/80666700
+/**
+ * 钉钉扫码登录验证服务
+ */
 @Service
 public class DingService {
 
-    private String ding_url = "https://oapi.dingtalk.com/connect/oauth2/sns_authorize?";
-    private String redirect_url = "https://www.baidu.com/";
+    private static final int TIMEOUT = 4000;
+
     private String appid = "dingoa1ft83dapn4jhlxnn";
     private String appSecret = "vXwQ-JarhtSQmILQdh_ONSf0egP1BWnvsv63Lo3ISijtv3AVUZO66jqZq3fk_n6U";
 
     private String tmp_token_url = "https://oapi.dingtalk.com/sns/gettoken?appid=" + appid + "&appsecret=" + appSecret;
-    private String per_token_url = "https://oapi.dingtalk.com/sns/get_persistent_code?access_token="; //post
-    private String sns_token_url = "https://oapi.dingtalk.com/sns/get_sns_token?access_token=";      //post
+    private String per_token_url = "https://oapi.dingtalk.com/sns/get_persistent_code?access_token=";
+    private String sns_token_url = "https://oapi.dingtalk.com/sns/get_sns_token?access_token=";
     private String user_info_url = "https://oapi.dingtalk.com/sns/getuserinfo?sns_token=";
 
-    private RestTemplate template = new RestTemplate();
+    private RestTemplate template;
+
+    public DingService() {
+        SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
+        requestFactory.setConnectTimeout(TIMEOUT);
+        requestFactory.setReadTimeout(TIMEOUT);
+        template = new RestTemplate(requestFactory);
+    }
 
     public TmpToken getTmpToken() {
         ResponseEntity<TmpToken> tmpToken = template.getForEntity(tmp_token_url, TmpToken.class);
@@ -31,6 +41,7 @@ public class DingService {
 
     public PerToken getPertoken(String code) {
         TmpToken tmpToken = getTmpToken();
+        checkSuccess(tmpToken);
         String token = tmpToken.getAccess_token();
         String param = "{'tmp_auth_code':'" + code + "'}";
         HttpHeaders headers = new HttpHeaders();
@@ -44,6 +55,7 @@ public class DingService {
 
     public SnsToken getSnsToken(String code) {
         PerToken perToken = getPertoken(code);
+        checkSuccess(perToken);
         String param = "{'openid': '" + perToken.getOpenid() + "','persistent_code': '" + perToken.getPersistent_code() + "'}";
         HttpHeaders headers = new HttpHeaders();
         MediaType type = MediaType.parseMediaType("application/json; charset=UTF-8");
@@ -53,8 +65,9 @@ public class DingService {
         return s;
     }
 
-    public UserInfo getuserInfo(String code) {
+    public UserInfo getUserInfo(String code) {
         SnsToken snsToken = getSnsToken(code);
+        checkSuccess(snsToken);
         ResponseEntity<ResuserInfo> tmpToken = template.getForEntity(user_info_url + snsToken.getSns_token(), ResuserInfo.class);
         if (tmpToken.getStatusCode().equals(HttpStatus.OK)) {
             return tmpToken.getBody().getUser_info();
@@ -73,17 +86,19 @@ public class DingService {
         private String access_token;
     }
 
+    private boolean checkSuccess(DingBase data) {
+        if (data != null && data.getErrcode() == 0) {
+            return true;
+        }
+        return false;
+    }
+
     @Data
-    private static class PerToken {
+    private static class PerToken extends DingBase {
         private String openid;
         private String unionid;
         private String persistent_code;
         private String tmpToken;
-    }
-
-    @Data
-    private static class SnsToken {
-        private String sns_token;
     }
 
     @Data
@@ -95,7 +110,12 @@ public class DingService {
     }
 
     @Data
-    public static class ResuserInfo {
+    private static class SnsToken extends DingBase {
+        private String sns_token;
+    }
+
+    @Data
+    public static class ResuserInfo extends DingBase {
         private UserInfo user_info;
     }
 
