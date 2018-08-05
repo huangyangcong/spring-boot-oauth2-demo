@@ -14,8 +14,8 @@ public class DingService {
 
     private static final int TIMEOUT = 4000;
 
-    private String appid = "dingoa1ft83dapn4jhlxnn";
-    private String appSecret = "vXwQ-JarhtSQmILQdh_ONSf0egP1BWnvsv63Lo3ISijtv3AVUZO66jqZq3fk_n6U";
+    private String appid = "dingoajyvqz1nazpqywfxn";
+    private String appSecret = "qkaPvilixjaoeKI8pFS9aaAyp7y00Zt6q2xCcg4O3JsiKcoYHxQNLoN5eWXoBfpS";
 
     private String tmp_token_url = "https://oapi.dingtalk.com/sns/gettoken?appid=" + appid + "&appsecret=" + appSecret;
     private String per_token_url = "https://oapi.dingtalk.com/sns/get_persistent_code?access_token=";

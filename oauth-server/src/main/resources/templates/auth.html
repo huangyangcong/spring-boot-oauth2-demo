@@ -19,7 +19,7 @@
 
     $(function() {
         let params = window.location.search.split("&");
-    if(!params[0].startsWith('?code=')){
+    if(!params[0].startsWith('code=')){
         return;
     }
     var tmp_auth_code = params[0].substr(params[0].indexOf("code=")+5);
@@ -27,7 +27,7 @@
         return;
     }
     $("#login_code").val(tmp_auth_code);
-    $("#login_from").val("https://www.www.baidu.com");
+    $("#login_from").val("http://localhost:9000/server/token");
     $("#login_type").val("dingding");
     document.getElementById('login_form').submit();
 
