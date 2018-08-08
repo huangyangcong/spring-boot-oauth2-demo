@@ -12,15 +12,21 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.util.StringUtils;
 import org.springframework.web.cors.CorsUtils;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Configuration
@@ -80,6 +86,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         ThirdAuthenticationFilter filter = new ThirdAuthenticationFilter();
         filter.setAuthenticationManager(super.authenticationManager());
         filter.setAuthenticationFailureHandler(ytoSimpleUrlAuthenticationFailureHandler());
+        filter.setAuthenticationSuccessHandler(new ThridAuthenticationSuccessHandler());
         return filter;
     }
 
@@ -133,5 +140,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             }
         };
     }
+
+    public class ThridAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+        public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
+                throws ServletException, IOException {
+            String url = request.getParameter("login_from");
+            if (StringUtils.hasText(url)) {
+                this.logger.debug("Redirecting to DefaultSavedRequest Url: " + url);
+                this.getRedirectStrategy().sendRedirect(request, response, url);
+            } else {
+                super.onAuthenticationSuccess(request, response, authentication);
+            }
+
+        }
+    }
+
 
 }

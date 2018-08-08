@@ -60,6 +60,13 @@
 
 const ding_url = "https://oapi.dingtalk.com/connect/oauth2/sns_authorize?";
 const redirect_url = "http://localhost:9000/server/auth";
+const appid = "dingoajyvqz1nazpqywfxn";
+const appSecret = "qkaPvilixjaoeKI8pFS9aaAyp7y00Zt6q2xCcg4O3JsiK1oYHxQNLoN5eWXoBfpS";
+
+const tmp_token_url = "https://oapi.dingtalk.com/sns/gettoken?appid="+appid+"&appsecret="+appSecret;
+const per_token_url = "https://oapi.dingtalk.com/sns/get_persistent_code?access_token="; //post
+const sns_token_url = "https://oapi.dingtalk.com/sns/get_sns_token?access_token=";      //post
+const user_info_url = "https://oapi.dingtalk.com/sns/getuserinfo?sns_token=";
 const appid = "dingoa1ft83dapn4jhlxnn";
 
 function makeState(){
@@ -70,10 +77,11 @@ for (var a=0;a<4;a++){
 return state;
 }
 
-function openDing(){
+
+function opending(){
   var obj = DDLogin({
      id:"login_container",//这里需要你在自己的页面定义一个HTML标签并设置id，例如<div id="login_container"></div>或<span id="login_container"></span>
-     goto: encodeURIComponent(ding_url+"appid="+appid+"&response_type=code&scope=snsapi_login&state="+makeState()+"&redirect_uri="+redirect_url),
+     goto: encodeURIComponent(ding_url+"appid="+appid+"&response_type=code&scope=snsapi_login&state="+state+"&redirect_uri="+redirect_url),
      width : "300",
      height: "300"
  });
