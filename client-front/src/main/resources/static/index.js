@@ -1,8 +1,9 @@
 const FULL_CHARTER = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopgrstuvwxyz';
 const oauth_server='http://localhost:9000/server';
 const redirect_uri='http://localhost:8002/client-front/';
-const client_id='demo';
-const client_secret='demo';
+const note_uri='http://localhost:7000/resource-note';
+const client_id='all';
+const client_secret='all';
 const token_storage = localStorage;//sessionStorage
 
 
@@ -146,7 +147,14 @@ function getServerdata(){
           });
 }
 
+function getNote(){
+    $.get(note_uri+"/note", function(data) {
+                $("#note").html(data);
+              });
+}
+
 
 $(function() {
 	ajaxSetup();
+	getNote();
 });

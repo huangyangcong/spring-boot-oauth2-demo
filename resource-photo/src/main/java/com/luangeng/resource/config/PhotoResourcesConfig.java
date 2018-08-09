@@ -15,7 +15,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 @EnableResourceServer
 public class PhotoResourcesConfig extends ResourceServerConfigurerAdapter {
 
-    public static final String PHOTO_RESOURCE_ID = "photos";
+    public static final String PHOTO_RESOURCE_ID = "photo";
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) {

@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -22,8 +21,8 @@ public class PhotoServiceImpl implements PhotoService {
     private List<PhotoInfo> photos = new ArrayList<>();
 
     public PhotoServiceImpl() {
-        photos.add(new PhotoInfo("1", "z"));
-        photos.add(new PhotoInfo("2", "z"));
+        photos.add(new PhotoInfo("1", "admin"));
+        photos.add(new PhotoInfo("2", "admin"));
         photos.add(new PhotoInfo("3", "user"));
     }
 
