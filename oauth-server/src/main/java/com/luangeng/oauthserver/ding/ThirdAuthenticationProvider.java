@@ -38,11 +38,11 @@ public class ThirdAuthenticationProvider implements AuthenticationProvider {
         if (!type.equalsIgnoreCase("dingding")) {
             throw new UsernameNotFoundException("登录类型错误：" + type);
         }
-        DingService.UserInfo userinfo = dingService.getUserInfo(code);
+        DingService.UserDetail userinfo = dingService.getUserDetail(code);
         if (userinfo == null) {
             throw new UsernameNotFoundException("钉钉扫码登录失败，未获取到用户信息");
         }
-        String username = "admin";//userinfo.get
+        String username = userinfo.getName();
 
         UserDetails user = userService.loadUserByUsername(username);
         if (user == null) {

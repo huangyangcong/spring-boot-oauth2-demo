@@ -58,7 +58,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public SimpleUrlAuthenticationFailureHandler ytoSimpleUrlAuthenticationFailureHandler() {
+    public SimpleUrlAuthenticationFailureHandler simpleUrlAuthenticationFailureHandler() {
         String failureUrl = "/login?error";
         MySimpleUrlAuthenticationFailureHandler handler = new MySimpleUrlAuthenticationFailureHandler(failureUrl);
         return handler;
@@ -85,7 +85,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     ThirdAuthenticationFilter thirdLoginFilter() throws Exception {
         ThirdAuthenticationFilter filter = new ThirdAuthenticationFilter();
         filter.setAuthenticationManager(super.authenticationManager());
-        filter.setAuthenticationFailureHandler(ytoSimpleUrlAuthenticationFailureHandler());
+        filter.setAuthenticationFailureHandler(simpleUrlAuthenticationFailureHandler());
         filter.setAuthenticationSuccessHandler(new ThridAuthenticationSuccessHandler());
         return filter;
     }

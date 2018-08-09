@@ -19,7 +19,7 @@
 
     $(function() {
         let params = window.location.search.split("&");
-    if(!params[0].startsWith('code=')){
+    if(params[0].indexOf('code=')==-1){
         return;
     }
     var tmp_auth_code = params[0].substr(params[0].indexOf("code=")+5);

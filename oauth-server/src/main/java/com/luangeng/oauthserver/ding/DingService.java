@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -13,10 +14,10 @@ import org.springframework.web.client.RestTemplate;
 
 /**
  * 钉钉扫码登录验证服务
- *
  */
 @Slf4j
 @Service
+@EnableScheduling
 public class DingService {
 
     private static final int DING_OK = 0;
@@ -25,9 +26,14 @@ public class DingService {
     private static final int REQUEST_TIMEOUT = 4000;
     private static final int TOKEN_REFRESH_FIXED_RATE = 1000 * 60 * 110;
     private static final String JSON_TYPE = "application/json; charset=UTF-8";
+
+    private static final String acc_token_url = "https://oapi.dingtalk.com/sns/gettoken?appid=%s&appsecret=%s";
     private static final String per_token_url = "https://oapi.dingtalk.com/sns/get_persistent_code?access_token=";
     private static final String sns_token_url = "https://oapi.dingtalk.com/sns/get_sns_token?access_token=";
     private static final String user_info_url = "https://oapi.dingtalk.com/sns/getuserinfo?sns_token=";
+    private static final String user_id_url = "https://oapi.dingtalk.com/user/getUseridByUnionid?access_token=%s&unionid=%s";
+    private static final String corp_token_url = "https://oapi.dingtalk.com/gettoken?corpid=%s&corpsecret=%s";
+    private static final String user_detail_url = "https://oapi.dingtalk.com/user/get?access_token=%s&userid=%s";
 
     private int failCount = 0;
 
@@ -37,9 +43,17 @@ public class DingService {
     @Value("${dingding.appSecret}")
     private String appSecret;
 
+    @Value("${dingding.corpId}")
+    private String corpId;
+
+    @Value("${dingding.corpSecret}")
+    private String corpSecret;
+
     private RestTemplate template;
 
     private AccessToken accessToken = null;
+
+    private CorpToken corpToken = null;
 
     public DingService() {
         SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
@@ -49,8 +63,8 @@ public class DingService {
     }
 
     public void getAccessToken() throws InterruptedException {
-        String acc_token_url = "https://oapi.dingtalk.com/sns/gettoken?appid=" + appId + "&appsecret=" + appSecret;
-        ResponseEntity<AccessToken> accessTokenVal = template.getForEntity(acc_token_url, AccessToken.class);
+        String url = String.format(acc_token_url, appId, appSecret);
+        ResponseEntity<AccessToken> accessTokenVal = template.getForEntity(url, AccessToken.class);
         if (accessTokenVal.getStatusCode().equals(HttpStatus.OK)) {
             failCount = 0;
             AccessToken token = accessTokenVal.getBody();
@@ -65,6 +79,12 @@ public class DingService {
             Thread.sleep(RETRY_DELAY);
             getAccessToken();
         }
+    }
+
+    public void getCorpToken() {
+        String url = String.format(corp_token_url, corpId, corpSecret);
+        ResponseEntity<CorpToken> accessTokenVal = template.getForEntity(url, CorpToken.class);
+        corpToken = accessTokenVal.getBody();
     }
 
     public PerToken getPerToken(String code) {
@@ -92,12 +112,34 @@ public class DingService {
         return s;
     }
 
-    public UserInfo getUserInfo(String code) {
+    public ResUserInfo getUserInfo(String code) {
         SnsToken snsToken = getSnsToken(code);
         checkSuccess(snsToken);
-        ResponseEntity<ResuserInfo> userInfo = template.getForEntity(user_info_url + snsToken.getSns_token(), ResuserInfo.class);
+        ResponseEntity<ResUserInfo> userInfo = template.getForEntity(user_info_url + snsToken.getSns_token(), ResUserInfo.class);
         if (userInfo.getStatusCode().equals(HttpStatus.OK)) {
-            return userInfo.getBody().getUser_info();
+            return userInfo.getBody();
+        }
+        return null;
+    }
+
+    public UserId getUserId(String code) {
+        ResUserInfo info = getUserInfo(code);
+        checkSuccess(info);
+        ResponseEntity<UserId> user = template.getForEntity(String.format(user_id_url, corpToken.getAccess_token(),
+                info.getUser_info().getUnionid()), UserId.class);
+        if (user.getStatusCode().equals(HttpStatus.OK)) {
+            return user.getBody();
+        }
+        return null;
+    }
+
+    public UserDetail getUserDetail(String code) {
+        UserId info = getUserId(code);
+        checkSuccess(info);
+        ResponseEntity<UserDetail> user = template.getForEntity(String.format(user_detail_url, corpToken.getAccess_token(),
+                info.getUserid()), UserDetail.class);
+        if (user.getStatusCode().equals(HttpStatus.OK)) {
+            return user.getBody();
         }
         return null;
     }
@@ -141,7 +183,7 @@ public class DingService {
     }
 
     @Data
-    public static class ResuserInfo extends DingBase {
+    private static class ResUserInfo extends DingBase {
         private UserInfo user_info;
     }
 
@@ -150,11 +192,37 @@ public class DingService {
         private String sns_token;
     }
 
+    @Data
+    private static class CorpToken extends DingBase {
+        private String access_token;
+        private String expires_in;
+    }
+
+    @Data
+    private static class UserId extends DingBase {
+        private String userid;
+        private String contactType;
+    }
+
+    @Data
+    public static class UserDetail extends DingBase {
+        private String name;
+        private String jobnumber;
+        private String email;
+        private String active;
+        private String mobile;
+    }
+
+    private static class RetryClass {
+
+    }
+
     @Component
     private class TimedTask {
         @Scheduled(fixedRate = TOKEN_REFRESH_FIXED_RATE)
         public void fetchAccessToken() throws InterruptedException {
             getAccessToken();
+            getCorpToken();
         }
     }
 }
