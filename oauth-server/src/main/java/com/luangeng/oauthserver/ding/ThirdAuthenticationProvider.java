@@ -28,8 +28,10 @@ public class ThirdAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
     private UserDetailsService userService;
+
     @Autowired
     private DingdingService dingService;
+
     private UserDetailsChecker authenticationChecks;
 
     private GrantedAuthoritiesMapper authoritiesMapper;
