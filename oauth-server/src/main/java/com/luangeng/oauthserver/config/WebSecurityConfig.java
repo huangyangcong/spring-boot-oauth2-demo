@@ -54,7 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/", "/webjars/**", "/static/**", "/js/**");
+        web.ignoring().antMatchers("/", "/webjars/**", "/js/**", "/img/**", "/css/**");
     }
 
     @Bean
@@ -124,6 +124,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginProcessingUrl("/login")
                 .failureUrl("/login?authorization_error=true")
+                .failureHandler(simpleUrlAuthenticationFailureHandler())
                 .loginPage("/login");
     }
 
@@ -142,6 +143,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     public class ThridAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+        @Override
         public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
                 throws ServletException, IOException {
             String url = request.getParameter("login_from");

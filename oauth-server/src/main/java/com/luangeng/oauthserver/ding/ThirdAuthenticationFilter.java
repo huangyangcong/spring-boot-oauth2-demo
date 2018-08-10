@@ -17,15 +17,16 @@ import java.io.IOException;
 public class ThirdAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
     public ThirdAuthenticationFilter() {
-        super(new AntPathRequestMatcher("/auth", "POST"));
+        super(new AntPathRequestMatcher("/auth", "GET"));
     }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
-        String code = request.getParameter("login_code");
-        String type = request.getParameter("login_type");
-        AbstractAuthenticationToken authToken = new ThirdAuthenticationToken(code, "");
-        ((ThirdAuthenticationToken) authToken).setLoginType(type);
+        String code = request.getParameter("code");
+        String type = request.getParameter("type");
+        String state = request.getParameter("state");
+        AbstractAuthenticationToken authToken = new ThirdAuthenticationToken(code, type);
+        ((ThirdAuthenticationToken) authToken).setLoginType("dingding");
         setDetails(request, authToken);
         Authentication auth = this.getAuthenticationManager().authenticate(authToken);
         return auth;

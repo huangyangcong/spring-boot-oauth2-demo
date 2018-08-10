@@ -3,6 +3,8 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="icon" th:href="@{img/favicon.ico}" type="image/x-icon">
+    <link rel="shortcut icon" th:href="@{img/favicon.ico}" type="image/x-icon">
     <link type="text/css" rel="stylesheet" th:href="@{/webjars/bootstrap/4.1.0/css/bootstrap.min.css}"/>
     <script type="text/javascript" th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/webjars/bootstrap/4.1.0/js/bootstrap.min.js}"></script>
@@ -41,80 +43,17 @@
                     <input id="password" class="form-control" type='text' name='password' value=""/>
                 </div>
                 <button class="btn btn-primary" type="submit">Login</button>
+                <button class="btn btn-primary" onclick="openDing()" type="button">钉钉</button>
+                <button class="btn btn-primary" onclick="openWeixin()" type="button">微信</button>
             </fieldset>
         </form>
 
     </div>
 
-    <button class="btn btn-primary" onclick="openDing()">钉钉</button>
-    <button class="btn btn-primary" onclick="openWeixin()">微信</button>
     <div id="login_container"></div>
 
 </div>
 
 
 </body>
-
-<script type="text/javascript">
-//<![CDATA[
-
-const FULL_CHARTER = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopgrstuvwxyz';
-const ding_url = "https://oapi.dingtalk.com/connect/oauth2/sns_authorize?";
-const redirect_url = "http://localhost:9000/server/auth";
-const appid = "dingoajyvqz1nazpqywfxn";
-const state="qwer";
-
-function makeState(){
-var state='';
-for (var a=0;a<4;a++){
-    state+=FULL_CHARTER[Math.floor(Math.random() * 52)];
-}
-return state;
-}
-
-
-function openDing(){
-  var obj = DDLogin({
-     id:"login_container",//这里需要你在自己的页面定义一个HTML标签并设置id，例如<div id="login_container"></div>或<span id="login_container"></span>
-     goto: encodeURIComponent(ding_url+"appid="+appid+"&response_type=code&scope=snsapi_login&state="+state+"&redirect_uri="+redirect_url),
-     width : "300",
-     height: "300"
- });
-}
-
-function openWeixin(){
-    var obj = new WxLogin({
- self_redirect:true,
- id:"login_container",
- appid: "wxbdc5610cc59c1631",
- scope: "snsapi_login",
- redirect_uri: encodeURIComponent(redirect_url),
-  state: makeState(),
- style: "black"
- });
-}
-
-var hanndleMessage = function (event) {
-    var origin = event.origin;
-    console.log("origin", event.origin);
-    //判断是否来自ddLogin扫码事件。
-    if( origin == "https://login.dingtalk.com" ) {
-        var tmp_code = event.data;
-        //拿到loginTmpCode后,在这里构造跳转链接进行跳转
-        window.parent.postMessage(tmp_code,'*');
-        window.location.href=ding_url+"appid="+appid+"&response_type=code&scope=snsapi_login&state="+state+"&redirect_uri="+redirect_url+"&loginTmpCode="+tmp_code;
-    }
-};
-
-if (typeof window.addEventListener != 'undefined') {
-    window.addEventListener('message', hanndleMessage, false);
-} else if (typeof window.attachEvent != 'undefined') {
-    window.attachEvent('onmessage', hanndleMessage);
-}
-
-
-
-//  ]]>
-
-</script>
 </html>

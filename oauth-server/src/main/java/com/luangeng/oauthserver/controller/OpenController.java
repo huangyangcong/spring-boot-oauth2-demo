@@ -9,7 +9,7 @@ public class OpenController {
 
     @RequestMapping()
     public String getTokens() {
-        return "Yhis is a open msg..";
+        return "this is a open msg..";
     }
 
 }

@@ -23,13 +23,22 @@ import org.springframework.stereotype.Component;
 public class ThirdAuthenticationProvider implements AuthenticationProvider {
 
     protected final Log logger = LogFactory.getLog(getClass());
-    protected MessageSourceAccessor messages = SpringSecurityMessageSource.getAccessor();
-    @Autowired
-    private DingService dingService;
+
+    protected MessageSourceAccessor messages;
+
     @Autowired
     private UserDetailsService userService;
-    private UserDetailsChecker authenticationChecks = new DefaultAuthenticationChecks();
-    private GrantedAuthoritiesMapper authoritiesMapper = new NullAuthoritiesMapper();
+    @Autowired
+    private DingdingService dingService;
+    private UserDetailsChecker authenticationChecks;
+
+    private GrantedAuthoritiesMapper authoritiesMapper;
+
+    public ThirdAuthenticationProvider() {
+        messages = SpringSecurityMessageSource.getAccessor();
+        authenticationChecks = new DefaultAuthenticationChecks();
+        authoritiesMapper = new NullAuthoritiesMapper();
+    }
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -38,15 +47,14 @@ public class ThirdAuthenticationProvider implements AuthenticationProvider {
         if (!type.equalsIgnoreCase("dingding")) {
             throw new UsernameNotFoundException("登录类型错误：" + type);
         }
-        DingService.UserDetail userinfo = dingService.getUserDetail(code);
-        if (userinfo == null) {
+        String userId = dingService.getEmployeeNum(code);
+        if (userId == null) {
             throw new UsernameNotFoundException("钉钉扫码登录失败，未获取到用户信息");
         }
-        String username = userinfo.getName();
 
-        UserDetails user = userService.loadUserByUsername(username);
+        UserDetails user = userService.loadUserByUsername("user");
         if (user == null) {
-            throw new UsernameNotFoundException("用户在系统中不存在：" + username);
+            throw new UsernameNotFoundException("用户在系统中不存在：" + userId);
         }
         authenticationChecks.check(user);
 
@@ -66,6 +74,7 @@ public class ThirdAuthenticationProvider implements AuthenticationProvider {
     }
 
     private class DefaultAuthenticationChecks implements UserDetailsChecker {
+        @Override
         public void check(UserDetails user) {
             if (!user.isAccountNonLocked()) {
                 logger.debug("User account is locked");
