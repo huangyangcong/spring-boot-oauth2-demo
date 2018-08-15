@@ -2,7 +2,7 @@
 SSO Oauth2.0 JWT  CORS CSRF     HTTPS SSH
 
 ##
-##应用列表
+##应用列表 端口
 
 oauth-server    授权服务            9000
 
