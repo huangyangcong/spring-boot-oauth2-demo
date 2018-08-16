@@ -12,14 +12,14 @@
     <script type="text/javascript" src="//g.alicdn.com/dingding/dinglogin/0.0.5/ddLogin.js"></script>
     <script type="text/javascript" src="http://res.wx.qq.com/connect/zh_CN/htmledition/js/wxLogin.js"></script>
 
-    <title>Login Server</title>
+    <title>统一认证平台登录</title>
 </head>
 
 <body>
 
 <div class="container">
 
-    <h1>Authorization Server</h1>
+    <h1>统一认证平台登录</h1>
 
     <div th:if="${#httpServletRequest.getParameter('authorization_error') == 'true' }">
         <h1>Woops!</h1>

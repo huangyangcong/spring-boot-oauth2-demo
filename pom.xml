@@ -53,12 +53,6 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>webjars-locator</artifactId>
-            <version>0.32</version>
-        </dependency>
-
     </dependencies>
 
     <build>

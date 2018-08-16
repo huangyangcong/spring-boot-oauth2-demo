@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Access Denied</title>
+    <link type="text/css" rel="stylesheet" th:href="@{/webjars/bootstrap/4.1.0/css/bootstrap.min.css}"/>
+    <script type="text/javascript" th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/4.1.0/js/bootstrap.min.js}"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Access Denied</h1>
+
+    <p th:text="${message}"> ( <span th:text="${error.summary}"/> )
+    </p>
+
+    <a th:href="@{/}">Go back</a>
+
+</div>
+
+</body>
+</html>

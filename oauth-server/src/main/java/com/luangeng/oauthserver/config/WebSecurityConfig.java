@@ -19,9 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.util.StringUtils;
 import org.springframework.web.cors.CorsUtils;
 
 import javax.servlet.ServletException;
@@ -86,7 +84,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         ThirdAuthenticationFilter filter = new ThirdAuthenticationFilter();
         filter.setAuthenticationManager(super.authenticationManager());
         filter.setAuthenticationFailureHandler(simpleUrlAuthenticationFailureHandler());
-        filter.setAuthenticationSuccessHandler(new ThridAuthenticationSuccessHandler());
+        filter.setAuthenticationSuccessHandler(new authenticationSuccessHandler());
         return filter;
     }
 
@@ -101,7 +99,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
 
                 .exceptionHandling()
-                .accessDeniedPage("/login?authorization_error=true")
+                .accessDeniedPage("/deny")
+
                 .and()
                 .addFilterBefore(thirdLoginFilter(), UsernamePasswordAuthenticationFilter.class)
 
@@ -118,42 +117,40 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 //.cors().configurationSource(configurationSource()).and()
 
-                .logout().addLogoutHandler(logoutHandler())
+                .logout()
+                .logoutSuccessUrl("/login")
+                //.addLogoutHandler(logoutHandler())
                 .and()
 
                 .formLogin()
                 .loginProcessingUrl("/login")
-                .failureUrl("/login?authorization_error=true")
+                //.failureUrl("/login?authorization_error=true")
                 .failureHandler(simpleUrlAuthenticationFailureHandler())
+                .successHandler(new authenticationSuccessHandler())
                 .loginPage("/login");
     }
 
-    @Bean
-    public LogoutHandler logoutHandler() {
-        return (httpServletRequest, httpServletResponse, authentication) -> {
-            try {
-                String redirect = httpServletRequest.getParameter("redirect_uri");
-                if (redirect != null) {
-                    httpServletResponse.sendRedirect(redirect);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        };
-    }
+//    @Bean
+//    public LogoutHandler logoutHandler() {
+//        return (httpServletRequest, httpServletResponse, authentication) -> {
+//            try {
+//                String redirect = httpServletRequest.getParameter("redirect_uri");
+//                if (redirect != null) {
+//                    httpServletResponse.sendRedirect(redirect);
+//                }
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        };
+//    }
 
-    public class ThridAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+    public class authenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
         @Override
         public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
                 throws ServletException, IOException {
-            String url = request.getParameter("login_from");
-            if (StringUtils.hasText(url)) {
-                this.logger.debug("Redirecting to DefaultSavedRequest Url: " + url);
-                this.getRedirectStrategy().sendRedirect(request, response, url);
-            } else {
-                super.onAuthenticationSuccess(request, response, authentication);
-            }
-
+            request.getSession().setAttribute("loginAs", authentication.getName());
+            this.setTargetUrlParameter("login_from");
+            super.onAuthenticationSuccess(request, response, authentication);
         }
     }
 

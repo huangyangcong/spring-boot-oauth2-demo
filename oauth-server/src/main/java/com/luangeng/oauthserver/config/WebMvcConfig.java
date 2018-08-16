@@ -12,6 +12,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addViewController("/").setViewName("index");
         registry.addViewController("/login").setViewName("login");
         registry.addViewController("/auth").setViewName("auth");
+        registry.addViewController("/deny").setViewName("access_denied");
     }
 
     @Override

@@ -19,8 +19,10 @@ public class MySimpleUrlAuthenticationFailureHandler extends SimpleUrlAuthentica
 
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
-    public MySimpleUrlAuthenticationFailureHandler(String url) {
+    private String url;
 
+    public MySimpleUrlAuthenticationFailureHandler(String url) {
+        this.url = url;
     }
 
     @Override
@@ -45,8 +47,8 @@ public class MySimpleUrlAuthenticationFailureHandler extends SimpleUrlAuthentica
     }
 
     private void handleUserLockedAndExpiredException(HttpServletRequest request, HttpServletResponse response, String msg) throws IOException {
-        String url = "login?" + msg;
-        redirectStrategy.sendRedirect(request, response, url);
+        String redirect_url = this.url + msg;
+        redirectStrategy.sendRedirect(request, response, redirect_url);
     }
 
 }
