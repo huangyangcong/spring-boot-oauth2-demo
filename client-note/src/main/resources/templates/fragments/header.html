@@ -7,13 +7,12 @@
 <body>
 <form th:action="@{/logout}" method="post" id="userform" th:fragment="header">
     <nav>
-        <div class="nav-wrapper blue lighten-1">
-            <a href="/" class="brand-logo">NeverNote</a>
+        <div class="nav-wrapper teal darken-2">
+            <a th:href="@{/}" class="brand-logo">Note</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a class="dropdown-button" href="#!" th:text="${#httpServletRequest.remoteUser}">Dropdown
-                    <i class="material-icons right">arrow_drop_down</i></a></li>
-                <li><a href="#" onclick="document.getElementById('userform').submit();"><i
-                        class="material-icons">power_settings_new</i></a></li>
+                <li><a class="dropdown-button" th:text="${#httpServletRequest.remoteUser}"></a></li>
+                <li><a class="dropdown-button" th:text="Logout"
+                       onclick="document.getElementById('userform').submit();"></a></li>
             </ul>
         </div>
     </nav>

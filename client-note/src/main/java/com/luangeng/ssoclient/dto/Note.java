@@ -1,9 +1,14 @@
 package com.luangeng.ssoclient.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.util.Date;
 
 public class Note {
     private long id;
-    private String title;
+
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date date;
     private String content;
 
     public long getId() {
@@ -14,12 +19,12 @@ public class Note {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public Date getDate() {
+        return date;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public String getContent() {
