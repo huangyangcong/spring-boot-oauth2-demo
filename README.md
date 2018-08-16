@@ -14,6 +14,7 @@ SSO Oauth2.0 JWT  CORS CSRF     HTTPS SSH
 * 
 * client-front    客户端-前端分离      8002
 * client-resource 客户端资源混合       8003
+* client-sdk      客户端接入sdk
 
 
 ##
