@@ -126,7 +126,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/login")
                 //.failureUrl("/login?authorization_error=true")
                 .failureHandler(simpleUrlAuthenticationFailureHandler())
-                .successHandler(new authenticationSuccessHandler())
+                // .successHandler(new authenticationSuccessHandler())
                 .loginPage("/login");
     }
 
