@@ -12,8 +12,10 @@ SSO Oauth2.0 JWT  CORS CSRF     HTTPS SSH
 * client-note     客户端-笔记         8000
 * client-photo    客户端-照片         8001
 * 
-* client-front    客户端-前端分离      8002
-* client-resource 客户端资源混合       8003
+* client-front    客户端-纯前端       8002
+*
+* client-combine  客户端资源混合       8003
+*
 * client-sdk      客户端接入sdk
 
 
