@@ -18,7 +18,7 @@ import java.security.Principal;
 import java.util.*;
 
 /**
- * token管理
+ * token
  */
 @Controller
 @RequestMapping("/token")
@@ -31,12 +31,6 @@ public class TokenController {
     @Autowired
     private ConsumerTokenServices tokenServices;
 
-    @RequestMapping(value = "/{token}")
-    public String revokeToken(@PathVariable String token) {
-        tokenServices.revokeToken(token);
-        return "redirect:/token";
-    }
-
     @RequestMapping
     public String listTokens(Model model) throws Exception {
         List<TokenVo> tokens = new ArrayList<>();
@@ -45,7 +39,13 @@ public class TokenController {
             tokens.addAll(enhance(tokenStore.findTokensByClientId(client)));
         }
         model.addAttribute("tokens", tokens);
-        return "index";
+        return "token";
+    }
+
+    @RequestMapping(value = "/{token}")
+    public String revokeToken(@PathVariable String token) {
+        tokenServices.revokeToken(token);
+        return "redirect:/token";
     }
 
     private List<TokenVo> enhance(Collection<OAuth2AccessToken> tokens) {

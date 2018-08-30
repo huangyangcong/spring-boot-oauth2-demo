@@ -1,62 +1,54 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="zh-CN">
 <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="icon" th:href="@{/img/favicon.ico}">
     <title>Server</title>
-    <link type="text/css" rel="stylesheet" th:href="@{/webjars/bootstrap/4.1.0/css/bootstrap.min.css}"/>
-    <script type="text/javascript" th:src="@{/webjars/jquery/3.0.0/jquery.min.js}"></script>
-    <script type="text/javascript" th:src="@{/webjars/bootstrap/4.1.0/js/bootstrap.min.js}"></script>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/index.css}" rel="stylesheet">
 </head>
 
 <body>
+<div th:replace="fragment :: header"></div>
 
-<div>
+<div class="container wrapper">
 
-    <h1>Oauth2 Server</h1>
-    <h2>Login as: <span th:text="${session.loginAs}"></span></h2>
+    <h1>控制台</h1>
 
     <div>
-        <a th:href="@{/token}">token</a>
-        <a th:href="@{/h2-console}">h2</a>
-        <a href="http://localhost:8000/client-note" target="_blank">client-note</a>
-        <a href="http://localhost:8001/client-photo" target="_blank">client-photo</a>
-    </div>
+        <a th:href="@{/token}">
+            <button class="btn btn-default" type="button">Token</button>
+        </a>
+        <a th:href="@{/user}">
+            <button class="btn btn-primary" type="button">User</button>
+        </a>
+        <a th:href="@{/h2-console}">
+            <button class="btn btn-info" type="button">H2</button>
+        </a>
 
-    <div class="form-horizontal">
-        <form th:action="@{/logout}" method="post">
-            <button class="btn btn-primary" type="submit">Logout</button>
-        </form>
+        <a href="http://localhost:8000/client-note" target="_blank">
+            <button class="btn btn-warning" type="button">Client Note</button>
+        </a>
+        <a href="http://localhost:8001/client-photo" target="_blank">
+            <button class="btn btn-success" type="button">Client Photo</button>
+        </a>
+        <a href="http://localhost:8002/client-front" target="_blank">
+            <button class="btn btn-danger" type="button">Client Front</button>
+        </a>
     </div>
-
-    <table border="1">
-        <tr>
-            <td>value</td>
-            <td>expiration</td>
-            <td>tokenType</td>
-            <td>refreshToken expiration</td>
-            <td>scope</td>
-            <td>additionalInformation</td>
-            <td>clientId</td>
-            <td>userName</td>
-            <td>userRole</td>
-            <td>opertion</td>
-        </tr>
-        <tr class="list-unstyled" th:each="token:${tokens}">
-            <td th:text="${token.accessToken.value}"></td>
-            <td th:text="${#dates.format(token.accessToken.expiration,'yyyy-MM-dd HH:mm:ss')}"></td>
-            <td th:text="${token.accessToken.tokenType}"></td>
-            <td th:text="${#dates.format(token.accessToken.refreshToken.expiration,'yyyy-MM-dd HH:mm:ss')}"></td>
-            <td th:text="${token.accessToken.scope}"></td>
-            <td th:text="${token.accessToken.additionalInformation}"></td>
-            <td th:text="${token.clientId}"></td>
-            <td th:text="${token.userName}"></td>
-            <td th:text="${token.userRole}"></td>
-            <td><a th:href="|@{/token/}${token.accessToken.value}|">revokeToken</a></td>
-        </tr>
-    </table>
 
 </div>
 
+<div th:replace="fragment :: footer"></div>
+
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -147,14 +147,12 @@ function getServerdata(){
           });
 }
 
-function getNote(){
+function getNotes(){
     $.get(note_uri+"/note", function(data) {
-                $("#note").html(data);
-              });
+         $("#note").html(JSON.stringify(data));
+    });
 }
-
 
 $(function() {
 	ajaxSetup();
-	getNote();
 });

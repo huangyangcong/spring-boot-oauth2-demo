@@ -23,7 +23,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(s);
+        User user = userRepository.findByName(s);
         if (user == null) {
             throw new UsernameNotFoundException("user not found " + s);
         }
@@ -39,7 +39,7 @@ public class UserService implements UserDetailsService {
 
         public CustomUserDetails(User user) {
             this.user = user;
-            this.authorities = translate(user.getRoles());
+            this.authorities = translate(user.getRole());
         }
 
         private Collection<? extends GrantedAuthority> translate(List<Role> roles) {
@@ -66,17 +66,18 @@ public class UserService implements UserDetailsService {
 
         @Override
         public String getUsername() {
-            return user.getUsername();
+            return user.getName();
         }
+
 
         @Override
         public boolean isAccountNonExpired() {
-            return true;
+            return !user.getExpire();
         }
 
         @Override
         public boolean isAccountNonLocked() {
-            return true;
+            return !user.getLock();
         }
 
         @Override
@@ -86,7 +87,7 @@ public class UserService implements UserDetailsService {
 
         @Override
         public boolean isEnabled() {
-            return true;
+            return !user.getDisable();
         }
 
     }

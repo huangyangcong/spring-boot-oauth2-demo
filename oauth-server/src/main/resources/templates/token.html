@@ -1,0 +1,57 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="icon" href="/img/favicon.png">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/index.css}" rel="stylesheet">
+    <title>Token</title>
+</head>
+
+<body>
+<div th:replace="fragment :: header"></div>
+
+<div class="container wrapper">
+    <h1>Token</h1>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>value</th>
+            <th>expiration</th>
+            <th>tokenType</th>
+            <th>refreshToken expiration</th>
+            <th>scope</th>
+            <th>additionalInformation</th>
+            <th>clientId</th>
+            <th>userName</th>
+            <th>userRole</th>
+            <th>opertion</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="token:${tokens}">
+            <td th:text="${token.accessToken.value}"></td>
+            <td th:text="${#dates.format(token.accessToken.expiration,'yyyy-MM-dd HH:mm:ss')}"></td>
+            <td th:text="${token.accessToken.tokenType}"></td>
+            <td th:text="${#dates.format(token.accessToken.refreshToken.expiration,'yyyy-MM-dd HH:mm:ss')}"></td>
+            <td th:text="${token.accessToken.scope}"></td>
+            <td th:text="${token.accessToken.additionalInformation}"></td>
+            <td th:text="${token.clientId}"></td>
+            <td th:text="${token.userName}"></td>
+            <td th:text="${token.userRole}"></td>
+            <td><a th:href="|@{/token/}${token.accessToken.value}|">revokeToken</a></td>
+        </tr>
+        <tbody>
+    </table>
+
+</div>
+
+<div th:replace="fragment :: footer"></div>
+
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>

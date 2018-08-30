@@ -8,7 +8,7 @@
     <link rel="icon" href="/img/favicon.png">
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link th:href="@{/css/index.css}" rel="stylesheet">
-    <title>Frontend Client</title>
+    <title>Client</title>
 </head>
 
 <body>
@@ -16,17 +16,36 @@
 
 <div class="container wrapper">
 
-    <h1>Frontend Client</h1>
-
-    <h2>Msg: <span style="color:red" id="user"></span></h2>
-
-    <div>
-        <input type="button" class="btn btn-success" onclick="getServerdata()" value="get server Data"/>
-        <input type="button" class="btn btn-success" onclick="checkToken()" value="checkToken"/>
-        <input type="button" class="btn btn-success" onclick="getNotes()" value="get notes"/>
-    </div>
-
-    <pre id="note"></pre>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Username</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th scope="row">1</th>
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+        </tr>
+        <tr>
+            <th scope="row">2</th>
+            <td>Jacob</td>
+            <td>Thornton</td>
+            <td>@fat</td>
+        </tr>
+        <tr>
+            <th scope="row">3</th>
+            <td>Larry</td>
+            <td>the Bird</td>
+            <td>@twitter</td>
+        </tr>
+        </tbody>
+    </table>
 
 </div>
 
@@ -34,7 +53,5 @@
 
 <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script type="text/javascript" th:src="@{/js/base64.js}"></script>
-<script type="text/javascript" th:src="@{/js/index.js}"></script>
 </body>
 </html>

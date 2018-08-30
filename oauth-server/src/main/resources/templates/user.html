@@ -1,0 +1,58 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="icon" href="/img/favicon.png">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/index.css}" rel="stylesheet">
+    <title>用户</title>
+</head>
+
+<body>
+<div th:replace="fragment :: header"></div>
+
+<div class="container wrapper">
+    <h1>User</h1>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>username</th>
+            <th>code</th>
+            <th>email</th>
+            <th>phone</th>
+            <th>disable</th>
+            <th>expire</th>
+            <th>lock</th>
+            <th>options</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user:${users}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.code}"></td>
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.phone}"></td>
+            <td><span th:class="${user.disable}?'label label-danger':'label label-success'"
+                      th:text="${user.disable}?'Yes':'No'"></span></td>
+            <td><span th:class="${user.expire}?'label label-danger':'label label-success'"
+                      th:text="${user.expire}?'Yes':'No'"></span></td>
+            <td><span th:class="${user.lock}?'label label-danger':'label label-success'"
+                      th:text="${user.lock}?'Yes':'No'"></span></td>
+            <td><a th:href="|@{/user/}${user.code}|">delete</a></td>
+        </tr>
+        <tbody>
+    </table>
+
+</div>
+
+<div th:replace="fragment :: footer"></div>
+
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>
