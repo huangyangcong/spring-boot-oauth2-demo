@@ -1,0 +1,20 @@
+#oauthserver: http://localhost:9000/server
+#
+#spring:
+
+#security:
+#  oauth2:
+#    client:
+#      clientId: note
+#      clientSecret: note
+#    resource:
+#      tokenInfoUri: ${oauthserver}/oauth/check_token
+#logging:
+#  level:
+#    org.springframework.security: DEBUG
+
+
+server:
+  port: 8003
+  servlet:
+    context-path: /client-combine

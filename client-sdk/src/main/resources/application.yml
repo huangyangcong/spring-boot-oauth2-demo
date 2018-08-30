@@ -1,0 +1,22 @@
+oauthserver: http://localhost:9000/server
+#
+spring:
+  datasource:
+    platform: h2
+
+security:
+  oauth2:
+    client:
+      clientId: note
+      clientSecret: note
+    resource:
+      tokenInfoUri: ${oauthserver}/oauth/check_token
+logging:
+  level:
+    org.springframework.security: DEBUG
+
+
+server:
+  port: 7000
+  servlet:
+    context-path: /resource-note
