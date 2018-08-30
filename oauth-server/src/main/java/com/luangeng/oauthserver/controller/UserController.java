@@ -23,26 +23,26 @@ public class UserController {
     UserRepository userRepository;
 
     @RequestMapping
-    public String list(Model model) throws Exception {
+    public String list(Model model) {
         List<User> users = userRepository.findAll();
         model.addAttribute("users", users);
         return "user";
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String add(User user) throws Exception {
+    public String add(User user) {
         user = userRepository.save(user);
         return "user";
     }
 
     @RequestMapping(method = RequestMethod.DELETE)
-    public String del(long id) throws Exception {
+    public String del(long id) {
         userRepository.deleteById(id);
         return "user";
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public String update(User user) throws Exception {
+    public String mod(User user) {
         userRepository.save(user);
         return "user";
     }

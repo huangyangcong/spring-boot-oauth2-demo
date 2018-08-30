@@ -72,12 +72,12 @@ public class UserService implements UserDetailsService {
 
         @Override
         public boolean isAccountNonExpired() {
-            return !user.getExpire();
+            return !user.getExpired();
         }
 
         @Override
         public boolean isAccountNonLocked() {
-            return !user.getLock();
+            return !user.getLocked();
         }
 
         @Override

@@ -60,6 +60,14 @@
             <artifactId>lombok</artifactId>
         </dependency>
 
+        <!-- mysql -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.35</version>
+            <scope>runtime</scope>
+        </dependency>
+
     </dependencies>
 
 </project>

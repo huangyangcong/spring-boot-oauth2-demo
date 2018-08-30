@@ -1,0 +1,81 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="icon" href="/img/favicon.png">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/index.css}" rel="stylesheet">
+    <title>用户</title>
+</head>
+
+<body>
+<div th:replace="fragment :: header"></div>
+
+<div class="container wrapper">
+    <h1>Role</h1>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>name</th>
+            <th>options</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="role:${roles}">
+            <td th:text="${role.id}"></td>
+            <td th:text="${role.name}"></td>
+            <td><a th:onclick="|del(${role.id})|">delete</a></td>
+        </tr>
+        <tbody>
+    </table>
+
+</div>
+
+<div th:replace="fragment :: footer"></div>
+
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script>
+    var base = window.location.href;
+    function add(){
+        axios.post(base, { name: 'Fred' })
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+    }
+
+    function mod(){
+        axios.put(base, {
+    firstName: 'Fred',
+    lastName: 'Flintstone'
+  })
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+    }
+
+    function del(id){
+    axios.delete(base+'?id='+id)
+  .then(function (response) {
+    console.log(response);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+  }
+
+</script>
+</body>
+</html>

@@ -25,9 +25,9 @@ public class User {
 
     private Boolean disable;
 
-    private Boolean expire;
+    private Boolean expired;
 
-    private Boolean lock;
+    private Boolean locked;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Role> role;

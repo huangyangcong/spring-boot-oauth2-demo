@@ -23,7 +23,6 @@ public class SessionFilter extends OncePerRequestFilter {
             httpServletRequest.getSession().setAttribute("loginAs", authentication.getName());
         }
 
-
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 

@@ -16,7 +16,6 @@
         <module>client-photo</module>
         <module>client-note</module>
         <module>client-front</module>
-        <module>client-2</module>
     </modules>
 
     <parent>

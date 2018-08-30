@@ -16,35 +16,38 @@
 
 <div class="container wrapper">
 
+    <h1>Client</h1>
     <table class="table table-striped">
         <thead>
         <tr>
-            <th>#</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Username</th>
+            <th>clientId</th>
+            <th>resourceIds</th>
+            <th>clientSecret</th>
+            <th>scope</th>
+            <th>authorizedGrantTypes</th>
+            <th>redirectUri</th>
+            <th>authorities</th>
+            <th>Token有效期</th>
+            <th>刷新Token有效期</th>
+            <th>附加信息</th>
+            <th>autoapprove</th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
+        <tr th:each="client:${clients}">
+            <td th:text="${client.clientId}"></td>
+            <td th:text="${client.resourceIds}"></td>
+            <td th:text="${client.clientSecret}"></td>
+            <td th:text="${client.scope}"></td>
+            <td th:text="${client.authorizedGrantTypes}"></td>
+            <td th:text="${client.webServerRedirectUri}"></td>
+            <td th:text="${client.authorities}"></td>
+            <td th:text="${client.accessTokenValidity}"></td>
+            <td th:text="${client.refreshTokenValidity}"></td>
+            <td th:text="${client.additionalInformation}"></td>
+            <td th:text="${client.autoapprove}"></td>
         </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-        </tr>
-        </tbody>
+        <tbody>
     </table>
 
 </div>

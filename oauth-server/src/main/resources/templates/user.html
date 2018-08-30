@@ -39,10 +39,10 @@
             <td th:text="${user.phone}"></td>
             <td><span th:class="${user.disable}?'label label-danger':'label label-success'"
                       th:text="${user.disable}?'Yes':'No'"></span></td>
-            <td><span th:class="${user.expire}?'label label-danger':'label label-success'"
-                      th:text="${user.expire}?'Yes':'No'"></span></td>
-            <td><span th:class="${user.lock}?'label label-danger':'label label-success'"
-                      th:text="${user.lock}?'Yes':'No'"></span></td>
+            <td><span th:class="${user.expired}?'label label-danger':'label label-success'"
+                      th:text="${user.expired}?'Yes':'No'"></span></td>
+            <td><span th:class="${user.locked}?'label label-danger':'label label-success'"
+                      th:text="${user.locked}?'Yes':'No'"></span></td>
             <td><a th:href="|@{/user/}${user.code}|">delete</a></td>
         </tr>
         <tbody>

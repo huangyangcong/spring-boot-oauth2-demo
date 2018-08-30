@@ -1,51 +1,51 @@
 package com.luangeng.oauthserver.controller;
 
-import com.luangeng.oauthserver.dao.ClientRepository;
-import com.luangeng.oauthserver.vo.Client;
+import com.luangeng.oauthserver.dao.RoleRepository;
+import com.luangeng.oauthserver.vo.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
 /**
- * Client
+ * Role
  */
 @Controller
-@RequestMapping("/client")
+@RequestMapping("/role")
 @PreAuthorize("hasRole('ADMIN')")
-public class ClientController {
+public class RoleController {
 
     @Autowired
-    private ClientRepository clientRepository;
+    RoleRepository roleRepository;
 
     @RequestMapping
     public String list(Model model) {
-        List<Client> clients = clientRepository.findAll();
-        model.addAttribute("clients", clients);
-        return "client";
+        List<Role> roles = roleRepository.findAll();
+        model.addAttribute("roles", roles);
+        return "role";
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public String add(Client client) {
-        client = clientRepository.save(client);
-        return "client";
+    public String add(Role role) {
+        role = roleRepository.save(role);
+        return "role";
     }
 
     @RequestMapping(method = RequestMethod.DELETE)
-    public String del(String id) {
-        clientRepository.deleteById(id);
-        return "client";
+    public String del(@RequestParam("id") int id) {
+        roleRepository.deleteById(id);
+        return "role";
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public String mod(Client client) {
-        client = clientRepository.save(client);
-        return "client";
+    public String mod(Role role) {
+        roleRepository.save(role);
+        return "role";
     }
-
 
 }
