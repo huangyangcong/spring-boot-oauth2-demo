@@ -9,7 +9,9 @@
 </head>
 
 <body>
-<main role="main" class="container">
+<div th:replace="fragment :: header"></div>
+
+<div class="container wrapper">
 
     <!--<div th:if="${not empty param.authentication_error}">-->
     <!--<h1>Woops!</h1>-->
@@ -23,10 +25,6 @@
     <!--</div>-->
     <div class="jumbotron">
         <h1>Login client</h1>
-
-        <p>
-            <a th:href="@{/}"/>Home</a>
-        </p>
 
         <form th:action="@{/login}" method="post">
             <fieldset>
@@ -43,6 +41,11 @@
         </form>
     </div>
 
-</main>
+</div>
+
+<div th:replace="fragment :: footer"></div>
+
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
 </html>

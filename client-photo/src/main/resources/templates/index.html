@@ -2,15 +2,21 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
       lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>Client</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/index.css}" rel="stylesheet">
 </head>
 
 <body>
-<main role="main" class="container">
+<div th:replace="fragment :: header"></div>
+
+<div class="container wrapper">
+
     <div class="jumbotron">
-        <h1>Welcome!&nbsp&nbsp<span th:text="${username}"></span></h1>
         <p>
             <span th:text="${message}"></span>
         </p>
@@ -31,6 +37,11 @@
             </p>
         </sec:authorize>
     </div>
-</main>
+</div>
+
+<div th:replace="fragment :: footer"></div>
+
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
 </html>

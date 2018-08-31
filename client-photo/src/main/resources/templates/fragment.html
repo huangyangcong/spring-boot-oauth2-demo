@@ -1,0 +1,42 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<nav class="navbar navbar-default navbar-fixed-top" th:fragment="header">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" th:href="@{/}">统一身份认证平台</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav"></ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a th:if="${session.loginAs}!=null" href="#">Welcome: <span th:text="${session.loginAs}"></span></a>
+                    <a th:if="${session.loginAs}==null" href="#">Login</a>
+                </li>
+                <li><a th:href="@{/logout}" onclick="logout()">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<nav class="navbar navbar-default navbar-fixed-top" th:fragment="header2">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" th:href="@{/}">统一身份认证平台</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav"></ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">Welcome</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<footer class="footer" th:fragment="footer">
+    <div align="center">
+        <span><a href="#" style="text-decoration: underline">©LUAN GENG</a></span>
+    </div>
+</footer>
+
+
