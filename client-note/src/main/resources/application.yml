@@ -27,3 +27,8 @@ server:
   servlet:
     context-path: /client-note
 
+spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    jackson.time-zone: GMT+8
+

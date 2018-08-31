@@ -1,26 +1,39 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <meta charset="UTF-8"/>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Oauth2 UI Notes</title>
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/index.css}" rel="stylesheet">
 </head>
+
 <body>
-<div class="fixed-action-btn">
-    <a class="btn-floating btn-large waves-effect waves-light teal lighten-2" href="/client-note/add"><i
-            class="material-icons">add</i></a>
-</div>
 
-<div th:replace="fragments/header :: header"></div>
+<div th:replace="fragment :: header"></div>
 
-<div class="row" th:each="note: ${notes}">
-    <div class="col s12 m8 offset-m2 l10 offset-l1">
-        <div class="card teal lighten-2">
-            <div class="card-content white-text">
-                <span class="card-title" th:text="${note.date}"></span>
+<div class="container wrapper">
+    <h1>Note</h1>
+
+    <div style="margin-bottom:10px"><a th:href="@{/add}" class="btn btn-success">Add</a></div>
+
+    <div th:each="note: ${notes}">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title" th:text="${note.date}"></h3>
+            </div>
+            <div class="panel-body">
                 <p th:text="${note.content}"></p>
             </div>
         </div>
     </div>
+
 </div>
+
+<div th:replace="fragment :: footer"></div>
+
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
 </html>

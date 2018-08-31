@@ -9,6 +9,7 @@ public class Note {
 
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date date;
+
     private String content;
 
     public long getId() {

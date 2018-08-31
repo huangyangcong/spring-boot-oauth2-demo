@@ -1,5 +1,7 @@
 package com.luangeng.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -11,7 +13,9 @@ public class Note {
     private long id;
 
     @Column(name = "create_time")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date date;
+
     private String content;
 
     public long getId() {
