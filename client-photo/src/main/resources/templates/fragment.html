@@ -4,22 +4,21 @@
 <nav class="navbar navbar-default navbar-fixed-top" th:fragment="header">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" th:href="@{/}">统一身份认证平台</a>
+            <a class="navbar-brand" th:href="@{/}">
+                <span id="nav-title">统一身份认证平台</span>
+            </a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav"></ul>
             <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a th:if="${session.loginAs}!=null" href="#">Welcome: <span th:text="${session.loginAs}"></span></a>
-                    <a th:if="${session.loginAs}==null" href="#">Login</a>
-                </li>
+                <li><a href="#">Welcome <span th:text="${session.loginAs}"></span></a></li>
                 <li><a th:href="@{/logout}" onclick="logout()">Logout</a></li>
             </ul>
         </div>
     </div>
 </nav>
 
-<nav class="navbar navbar-default navbar-fixed-top" th:fragment="header2">
+<nav class="navbar navbar-default navbar-fixed-top" th:fragment="header_login">
     <div class="container">
         <div class="navbar-header">
             <a class="navbar-brand" th:href="@{/}">统一身份认证平台</a>
@@ -27,7 +26,7 @@
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav"></ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Welcome</a></li>
+                <li><a href="">Welcome</a></li>
             </ul>
         </div>
     </div>
@@ -35,8 +34,18 @@
 
 <footer class="footer" th:fragment="footer">
     <div align="center">
-        <span><a href="#" style="text-decoration: underline">©LUAN GENG</a></span>
+        <img rel="icon" src="https://luangeng.gitee.io/cdn/gif/name.gif"
+             onload="
+             var title =document.title;
+             var nav = document.getElementById('nav-title').innerHTML;
+             if (title.length!=0 && nav.length==0)
+                document.getElementById('nav-title').innerHTML=document.title;
+             if (title.length==0 && nav.length!=0)
+             document.title =nav;
+">
     </div>
 </footer>
+
+
 
 

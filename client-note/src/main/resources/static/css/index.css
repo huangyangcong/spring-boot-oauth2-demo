@@ -1,30 +1,46 @@
 body {
-  padding-top: 70px;
+  padding-top: 50px;
 }
 
 a{ text-decoration:none}
+
+.form-signin {
+  max-width: 400px;
+  padding: 15px;
+  margin: 0 auto;
+}
+.form-signin .form-control {
+  position: relative;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom:10px;
+}
 
 /*
  * Override Bootstrap's default container.
  */
 @media (min-width: 1200px) {
   .container {
-    width: 1200px;
+    width: 1000px;
   }
 }
 
 .wrapper {
-  min-height: calc(100vh - 70px);
-  margin-bottom: -40px;
+  min-height: calc(100vh - 80px);
+  margin-bottom: -30px;
 }
 
 .footer {
-  padding: 10px 0;
+  padding: 5px 0;
   color: #999;
   text-align: center;
   background-color: #f8f8f8;
   border-top: 1px solid #e5e5e5;
   z-index: 9999;
     width: 100%;
-    height:40px;
+    height:30px;
+    margin-top:30px
 }
