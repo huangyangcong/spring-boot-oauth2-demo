@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Oauth2 UI Notes</title>
+    <title>Note</title>
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link th:href="@{/css/index.css}" rel="stylesheet">
 </head>
@@ -14,9 +14,11 @@
 <div th:replace="fragment :: header"></div>
 
 <div class="container wrapper">
-    <h1>Note</h1>
+    <h2>Note</h2>
 
-    <div style="margin-bottom:10px"><a th:href="@{/add}" class="btn btn-success">Add</a></div>
+    <div><a th:href="@{/add}" class="btn btn-default">Add</a></div>
+
+    <br>
 
     <div th:each="note: ${notes}">
         <div class="panel panel-primary">

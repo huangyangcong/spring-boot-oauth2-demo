@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Add Note</title>
+    <title>Note</title>
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link th:href="@{/css/index.css}" rel="stylesheet">
 </head>
@@ -14,13 +14,13 @@
 
 <div class="container wrapper">
 
-    <h1>新增</h1>
+    <h2>Add Note</h2>
 
     <form th:object="${note}" method="post" th:action="@{/add}">
         <textarea id="content" class="form-control" data-length="255" th:field="*{content}"
                   maxlength="255" required="required" rows="3" placeholder="输入内容"></textarea>
         <div style="margin-top:10px">
-            <button class="btn btn-success" type="submit">Submit</button>
+            <button class="btn btn-success" type="submit">Add</button>
         </div>
     </form>
 </div>
