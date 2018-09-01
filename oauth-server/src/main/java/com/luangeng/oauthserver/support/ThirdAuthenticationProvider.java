@@ -1,5 +1,6 @@
-package com.luangeng.oauthserver.ding;
+package com.luangeng.oauthserver.support;
 
+import com.luangeng.oauthserver.service.DingdingService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;

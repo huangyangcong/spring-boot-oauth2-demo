@@ -1,8 +1,8 @@
 package com.luangeng.oauthserver.config;
 
-import com.luangeng.oauthserver.ding.ThirdAuthenticationFilter;
-import com.luangeng.oauthserver.ding.ThirdAuthenticationProvider;
-import com.luangeng.oauthserver.support.MySimpleUrlAuthenticationFailureHandler;
+import com.luangeng.oauthserver.filter.ThirdAuthenticationFilter;
+import com.luangeng.oauthserver.support.MyAuthenticationFailureHandler;
+import com.luangeng.oauthserver.support.ThirdAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +23,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsUtils;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -57,8 +58,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public SimpleUrlAuthenticationFailureHandler simpleUrlAuthenticationFailureHandler() {
-        String failureUrl = "/login?error";
-        MySimpleUrlAuthenticationFailureHandler handler = new MySimpleUrlAuthenticationFailureHandler(failureUrl);
+        String failureUrl = "/login?error=";
+        MyAuthenticationFailureHandler handler = new MyAuthenticationFailureHandler(failureUrl);
         return handler;
     }
 
@@ -124,6 +125,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .formLogin()
                 .loginProcessingUrl("/login")
+                .successHandler(new authenticationSuccessHandler())
                 //.failureUrl("/login?authorization_error=true")
                 .failureHandler(simpleUrlAuthenticationFailureHandler())
                 // .successHandler(new authenticationSuccessHandler())
@@ -149,6 +151,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
                 throws ServletException, IOException {
             request.getSession().setAttribute("loginAs", authentication.getName());
+            response.addCookie(new Cookie("loginAs", "authentication.getName()"));
             this.setTargetUrlParameter("login_from");
             super.onAuthenticationSuccess(request, response, authentication);
         }

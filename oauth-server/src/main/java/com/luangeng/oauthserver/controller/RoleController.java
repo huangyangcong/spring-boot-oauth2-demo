@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -33,13 +33,13 @@ public class RoleController {
     @RequestMapping(method = RequestMethod.POST)
     public String add(Role role) {
         role = roleRepository.save(role);
-        return "role";
+        return "redirect:/role";
     }
 
-    @RequestMapping(method = RequestMethod.DELETE)
-    public String del(@RequestParam("id") int id) {
+    @RequestMapping("/d/{id}")
+    public String del(@PathVariable("id") int id) {
         roleRepository.deleteById(id);
-        return "role";
+        return "redirect:/role";
     }
 
     @RequestMapping(method = RequestMethod.PUT)

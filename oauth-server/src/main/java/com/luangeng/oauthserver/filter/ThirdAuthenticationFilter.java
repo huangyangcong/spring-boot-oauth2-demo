@@ -1,5 +1,6 @@
-package com.luangeng.oauthserver.ding;
+package com.luangeng.oauthserver.filter;
 
+import com.luangeng.oauthserver.support.ThirdAuthenticationToken;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;

@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link rel="icon" href="/img/favicon.png">
+    <link rel="icon" href="https://luangeng.gitee.io/cdn/ico/favicon.ico">
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link th:href="@{/css/index.css}" rel="stylesheet">
     <title>Client</title>
@@ -15,29 +15,29 @@
 <div th:replace="fragment :: header"></div>
 
 <div class="container wrapper">
+    <h2>Client</h2>
 
-    <h1>Client</h1>
-    <table class="table table-striped">
+    <table class="table table-striped table-bordered table-hover">
         <thead>
         <tr>
-            <th>clientId</th>
-            <th>resourceIds</th>
-            <th>clientSecret</th>
-            <th>scope</th>
-            <th>authorizedGrantTypes</th>
-            <th>redirectUri</th>
-            <th>authorities</th>
+            <th>ClientId</th>
+            <th>Secret</th>
+            <th>ResourceIds</th>
+            <th>Scope</th>
+            <th>AuthorizedGrantTypes</th>
+            <th>RedirectUri</th>
+            <th>Authorities</th>
             <th>Token有效期</th>
             <th>刷新Token有效期</th>
             <th>附加信息</th>
-            <th>autoapprove</th>
+            <th>Autoapprove</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="client:${clients}">
             <td th:text="${client.clientId}"></td>
-            <td th:text="${client.resourceIds}"></td>
             <td th:text="${client.clientSecret}"></td>
+            <td th:text="${client.resourceIds}"></td>
             <td th:text="${client.scope}"></td>
             <td th:text="${client.authorizedGrantTypes}"></td>
             <td th:text="${client.webServerRedirectUri}"></td>

@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 
 //
@@ -14,7 +15,7 @@ public class MeController {
 
     @ResponseBody
     @RequestMapping("/me")
-    public Principal me(Principal principal) {
+    public Principal me(Principal principal, HttpServletRequest request) {
         return principal;
     }
 

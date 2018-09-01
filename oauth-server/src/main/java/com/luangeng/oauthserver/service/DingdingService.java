@@ -1,4 +1,4 @@
-package com.luangeng.oauthserver.ding;
+package com.luangeng.oauthserver.service;
 
 import com.luangeng.oauthserver.exception.DingServiceException;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package com.luangeng.oauthserver.ding;
+package com.luangeng.oauthserver.support;
 
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;

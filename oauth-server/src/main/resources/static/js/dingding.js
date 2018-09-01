@@ -17,8 +17,8 @@ function openDing(){
   var obj = DDLogin({
      id:"login_container",//这里需要你在自己的页面定义一个HTML标签并设置id，例如<div id="login_container"></div>或<span id="login_container"></span>
      goto: encodeURIComponent(ding_url+"appid="+appid+"&response_type=code&scope=snsapi_login&state="+state+"&redirect_uri="+redirect_url),
-     width : "300",
-     height: "300"
+     width : "370",
+     height: "370"
  });
 }
 
