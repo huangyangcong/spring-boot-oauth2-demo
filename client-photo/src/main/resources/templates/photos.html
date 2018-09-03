@@ -15,8 +15,8 @@
 <div th:replace="fragment :: header"></div>
 
 <div class="container wrapper">
+    <h2>Your Photos</h2>
 
-    <h1>Your Photos</h1>
     <ul class="list-unstyled" th:each="photoId:${photoIds}">
         <li><img th:src="@{|/photos/${photoId}|}"/></li>
     </ul>

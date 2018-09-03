@@ -3,6 +3,7 @@ package com.luangeng.oauthserver.watchmen;
 import com.luangeng.oauthserver.exception.RequestLimitException;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -34,7 +35,7 @@ public class WatchmenAspect {
      * @args(注解列表) 参数带该注解的方法
      */
 
-    //@Before("@target(limit)")
+    @Before("within(@org.springframework.stereotype.Controller *) && @target(limit)")
     public void requestLimit(final JoinPoint joinPoint, Watchmen limit) throws RequestLimitException {
 //        RequestAttributes ra = RequestContextHolder.getRequestAttributes();
 //        ServletRequestAttributes sra = (ServletRequestAttributes) ra;

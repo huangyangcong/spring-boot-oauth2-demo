@@ -126,9 +126,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginProcessingUrl("/login")
                 .successHandler(new authenticationSuccessHandler())
-                //.failureUrl("/login?authorization_error=true")
                 .failureHandler(simpleUrlAuthenticationFailureHandler())
-                // .successHandler(new authenticationSuccessHandler())
                 .loginPage("/login");
     }
 
@@ -151,8 +149,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
                 throws ServletException, IOException {
             request.getSession().setAttribute("loginAs", authentication.getName());
-            response.addCookie(new Cookie("loginAs", authentication.getName()));
-            this.setTargetUrlParameter("login_from");
+            Cookie cookie = new Cookie("loginAs", authentication.getName());
+            response.addCookie(cookie);
+            //this.setTargetUrlParameter("login_from");
             super.onAuthenticationSuccess(request, response, authentication);
         }
     }
