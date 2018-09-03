@@ -1,7 +1,7 @@
 package com.luangeng.oauthserver.config;
 
 import com.luangeng.oauthserver.filter.ThirdAuthenticationFilter;
-import com.luangeng.oauthserver.support.MyAuthenticationFailureHandler;
+import com.luangeng.oauthserver.handler.MyAuthenticationFailureHandler;
 import com.luangeng.oauthserver.support.ThirdAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

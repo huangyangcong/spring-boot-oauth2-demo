@@ -2,6 +2,7 @@ package com.luangeng.oauthserver.controller;
 
 import com.luangeng.oauthserver.dao.UserRepository;
 import com.luangeng.oauthserver.vo.User;
+import com.luangeng.oauthserver.watchmen.Watchmen;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -30,6 +31,7 @@ public class UserController {
         return "user";
     }
 
+    @Watchmen(time = 500)
     @RequestMapping(method = RequestMethod.POST)
     public String add(User user) {
         user = userRepository.save(user);

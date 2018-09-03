@@ -1,4 +1,4 @@
-package com.luangeng.oauthserver.support;
+package com.luangeng.oauthserver.handler;
 
 import com.luangeng.oauthserver.exception.DingServiceException;
 import org.springframework.security.authentication.*;
