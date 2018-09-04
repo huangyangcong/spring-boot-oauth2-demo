@@ -43,7 +43,13 @@
                         <input type="text" class="form-control" name="phone" placeholder="Phone">
                     </div>
                 </div>
+                <div style="margin:10px">
+                    <input type="checkbox" name="disable">Disable
+                    <input type="checkbox" name="expired">Expired
+                    <input type="checkbox" name="locked">Locked
+                </div>
                 <button type="submit" class="btn btn-success">Save</button>
+                <a class="btn btn-info" onclick="cancel()">Cancel</a>
             </form>
         </div>
     </div>
@@ -64,7 +70,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="user:${users}">
+        <tr th:each="user,iter:${users}">
             <td th:text="${user.id}"></td>
             <td th:text="${user.name}"></td>
             <td th:text="${user.code}"></td>
@@ -89,7 +95,7 @@
             </td>
             <td>
                 <a class="btn btn-danger btn-xs" th:href="|@{/user/d/}${user.id}|">delete</a>
-                <a class="btn btn-warning btn-xs" th:href="|del(${user.id})|">edit</a>
+                <a class="btn btn-warning btn-xs" th:onclick="|mod(${iter.index})|">edit</a>
             </td>
         </tr>
         <tbody>
@@ -101,5 +107,40 @@
 
 <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script th:inline="javascript">
+/*<![CDATA[*/
+    var users =  JSON.parse('[[${users}]]');
+
+    function mod(index){
+    var user = users[index];
+    $("input[name='id']").val(user.id);
+    $("input[name='name']").val(user.name);
+    $("input[name='code']").val(user.code);
+    $("input[name='email']").val(user.email);
+    $("input[name='phone']").val(user.phone);
+    $("input[name='disable']").prop("checked",user.disable);
+    $("input[name='expired']").prop("checked",user.expired);
+    $("input[name='locked']").prop("checked",user.locked);
+    }
+
+    function cancel(){
+        $("input[name='id']").val('');
+        $("input[name='name']").val('');
+        $("input[name='code']").val('');
+        $("input[name='email']").val('');
+        $("input[name='phone']").val('');
+        $("input[name='disable']").prop("checked",false);
+        $("input[name='expired']").prop("checked",false);
+        $("input[name='locked']").prop("checked",false);
+    }
+
+/*]]>*/
+
+
+
+
+</script>
+
 </body>
 </html>

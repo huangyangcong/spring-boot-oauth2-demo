@@ -24,6 +24,7 @@ public class UserController {
     @Autowired
     UserRepository userRepository;
 
+    @Watchmen(time = 5000)
     @RequestMapping
     public String list(Model model) {
         List<User> users = userRepository.findAll();
@@ -31,10 +32,12 @@ public class UserController {
         return "user";
     }
 
-    @Watchmen(time = 500)
+    @Watchmen(time = 5000)
     @RequestMapping(method = RequestMethod.POST)
     public String add(User user) {
-        user = userRepository.save(user);
+        if (!user.getName().isEmpty()) {
+            user = userRepository.save(user);
+        }
         return "redirect:/user";
     }
 
@@ -42,12 +45,6 @@ public class UserController {
     public String del(@PathVariable("id") long id) {
         userRepository.deleteById(id);
         return "redirect:/user";
-    }
-
-    @RequestMapping(method = RequestMethod.PUT)
-    public String mod(User user) {
-        userRepository.save(user);
-        return "user";
     }
 
 }

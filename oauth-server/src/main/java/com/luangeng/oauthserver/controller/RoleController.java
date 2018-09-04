@@ -32,7 +32,9 @@ public class RoleController {
 
     @RequestMapping(method = RequestMethod.POST)
     public String add(Role role) {
-        role = roleRepository.save(role);
+        if (!role.getName().isEmpty()) {
+            role = roleRepository.save(role);
+        }
         return "redirect:/role";
     }
 

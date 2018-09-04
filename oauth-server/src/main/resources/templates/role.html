@@ -28,6 +28,7 @@
                     </div>
                 </div>
                 <button type="submit" class="btn btn-success">Save</button>
+                <a class="btn btn-info" onclick="cancel()">Cancel</a>
             </form>
         </div>
     </div>
@@ -41,12 +42,12 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="role:${roles}">
+        <tr th:each="role,iter:${roles}">
             <td th:text="${role.id}"></td>
             <td th:text="${role.name}"></td>
             <td>
                 <a class="btn btn-danger btn-xs" th:href="|@{/role/d/}${role.id}|">delete</a>
-                <a class="btn btn-warning btn-xs" th:onclick="|mod(${role})|">edit</a>
+                <a class="btn btn-warning btn-xs" th:onclick="|mod(${iter.index})|">edit</a>
             </td>
         </tr>
         <tbody>
@@ -58,27 +59,23 @@
 
 <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-<script>
-    var base = window.location.href;
+<script th:inline="javascript">
+/*<![CDATA[*/
+    var roles =  JSON.parse('[[${roles}]]');
 
-    function mod(role){
-
-
-
-        axios.put(base, {
-    firstName: 'Fred',
-    lastName: 'Flintstone'
-  })
-  .then(function (response) {
-    console.log(response);
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
+    function mod(index){
+    var role = roles[index];
+    $("input[name='id']").val(role.id);
+    $("input[name='name']").val(role.name);
     }
 
+    function cancel(){
+        $("input[name='id']").val('');
+        $("input[name='name']").val('');
+    }
+
+/*]]>*/
 </script>
 </body>
 </html>

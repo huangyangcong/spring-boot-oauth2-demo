@@ -29,10 +29,4 @@ public @interface Watchmen {
 //    Class strage() default SessionStrage.class;
 
 
-//    /**
-//     * 内存，redis
-//     * @return
-//     */
-//    int type() default 1;
-
 }

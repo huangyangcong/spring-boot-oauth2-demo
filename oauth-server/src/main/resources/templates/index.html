@@ -21,24 +21,28 @@
 
     <h1>控制台</h1>
 
-    <div>
+    <div class="br_row">
+        <a th:href="@{/token}" class="btn btn-default">Token管理</a>
 
-        <a th:href="@{/token}" class="btn btn-default">Token</a>
+        <a th:href="@{/user}" class="btn btn-primary">User管理</a>
 
-        <a th:href="@{/user}" class="btn btn-primary">User</a>
+        <a th:href="@{/role}" class="btn btn-primary">Role管理</a>
 
-        <a th:href="@{/role}" class="btn btn-primary">Role</a>
+        <a th:href="@{/client}" class="btn btn-primary">Client管理</a>
+    </div>
 
-        <a th:href="@{/client}" class="btn btn-primary">Client</a>
+    <div class="br_row">
+        <a th:href="@{/h2-console}" target="_blank" class="btn btn-info">H2数据库</a>
+    </div>
 
-        <a th:href="@{/h2-console}" class="btn btn-info">H2</a>
-
+    <div class="br_row">
         <a href="http://localhost:8000/client-note" target="_blank" class="btn btn-warning">Client Note</a>
 
         <a href="http://localhost:8001/client-photo" target="_blank" class="btn btn-success">Client Photo</a>
 
         <a href="http://localhost:8002/client-front" target="_blank" class="btn btn-danger">Client Front</a>
 
+        <a href="http://localhost:8003/client-combine" target="_blank" class="btn btn-info">Client Combine</a>
     </div>
 
 </div>

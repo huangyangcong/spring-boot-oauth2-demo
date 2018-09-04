@@ -14,8 +14,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class WatchmenAspect {
 
-//    private static final Logger logger = LoggerFactory.getLogger("WatchmenAspect");
-
     @Autowired
     private RedisDao redisDao;
 
@@ -35,23 +33,13 @@ public class WatchmenAspect {
      * @args(注解列表) 参数带该注解的方法
      */
 
-    @Before("within(@org.springframework.stereotype.Controller *) && @target(limit)")
-    public void requestLimit(final JoinPoint joinPoint, Watchmen limit) throws RequestLimitException {
+    @Before("within(@org.springframework.stereotype.Controller *) && @target(watchmen) ")
+    public void requestLimit(final JoinPoint joinPoint, Watchmen watchmen) throws RequestLimitException {
 //        RequestAttributes ra = RequestContextHolder.getRequestAttributes();
 //        ServletRequestAttributes sra = (ServletRequestAttributes) ra;
 //        HttpServletRequest request = sra.getRequest();
         RequestDesc desc = RequestDescContextHolder.get();
-        redisDao.log(desc, limit);
+        redisDao.log(desc, watchmen);
     }
-
-//    @After("")
-//    public void qqq(){
-//
-//    }
-//
-//    @AfterThrowing("")
-//    public void qq(){
-//
-//    }
 
 }
